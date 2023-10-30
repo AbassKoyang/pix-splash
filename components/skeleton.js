@@ -6,7 +6,7 @@ const SkeletonLoader = () => (
   <ContentLoader
     speed={2}
     width={200}
-    height={150}
+    height={200}
     viewBox="0 0 200 150"
     backgroundColor="#f3f3f3"
     foregroundColor="#ecebeb"

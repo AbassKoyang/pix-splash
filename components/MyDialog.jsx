@@ -2,12 +2,13 @@ import React from 'react';
 import { motion, useAnimation } from 'framer-motion';
 import { useState, Fragment } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
-import { BsBookmarks, BsCheck2, BsFillInfoCircleFill, BsSave, BsX } from 'react-icons/bs';
+import { BsArrowLeft, BsBookmarks, BsCheck2, BsFillInfoCircleFill, BsSave, BsX } from 'react-icons/bs';
 import Image from 'next/image';
 import Link from 'next/link';
-import { BiChevronDown } from 'react-icons/bi';
+import { BiChevronDown, BiSolidChevronLeft } from 'react-icons/bi';
 import { AiFillCheckCircle } from 'react-icons/ai';
 import { RiShareBoxFill } from 'react-icons/ri';
+import { FaArrowLeft } from 'react-icons/fa';
 import MoreInfo from './MoreInfo';
 
 const MyDialog = ({isOpen, closeModal, images}) => {
@@ -86,11 +87,12 @@ const MyDialog = ({isOpen, closeModal, images}) => {
         >
           <Dialog.Panel className="relative w-full h-full lg:max-w-5xl lg:max-h-[95vh] overflow-y-auto overflow-hidden transform rounded-none lg:rounded-2xl bg-white p-3 lg:p-6 text-left shadow-xl transition-all flex flex-col gap-5">
 
-            <button onClick={closeModal} className='absolute top-2 right-2 p-2 bg-gray-200 rounded-full outline-none border-none stroke-none'><BsX className='w-6 h-6'/></button>
+            <button onClick={closeModal} className='absolute top-2 right-2 p-2 bg-gray-200 rounded-full outline-none border-none stroke-none hidden lg:block'><BsX className='w-6 h-6'/></button>
+            <button onClick={closeModal} className='absolute top-2 left-2 rounded-full outline-none border-none stroke-none lg:hidden'><BiSolidChevronLeft className='w-8 h-8'/></button>
 
             {/* Nav */}
 
-            <div className="w-full flex justify-between items-center mt-8">
+            <div className="w-full flex justify-between items-center mt-10 lg:mt-8">
               <div className="flex items-center justify-center gap-3">
               <Link href='/' className='object-contain'><img src={user.profile_image.small} className='w-14 h-14 rounded-full object-contain'></img></Link>
 
@@ -113,7 +115,7 @@ const MyDialog = ({isOpen, closeModal, images}) => {
                 <button className="h-full hidden md:block bg-black/90 hover:bg-black text-white text-lg w-[75%]" onClick={() => {handleDownloadImage(urls.small, description)}}>
                   Free Download
                 </button>
-                <button className="h-full bg-black/90  hover:bg-black w-[100%] md:w-[25%] flex items-center justify-center" onClick={() => {setDownloadToggle(!downloadToggle), handleClick}}>
+                <button className="h-full bg-black/90  hover:bg-black w-[100%] md:w-[25%] flex items-center justify-center rounded-md lg:rounded-none" onClick={() => {setDownloadToggle(!downloadToggle), handleClick}}>
                   <BiChevronDown className={`text-white w-7 h-7 transition-all duration-300 ${downloadToggle ? 'rotate-180' : 'rotate-0'}`} />
                 </button>
 

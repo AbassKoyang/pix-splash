@@ -8,9 +8,22 @@ import { FiMenu } from 'react-icons/fi'
 
 const Navbar = ({otherStyles, onSearch }) => {
 const [searchQuery, setSearchQuery] = useState('');
+const [filled, setFilled] = useState(false)
 
+
+const handlePress = (event) => {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            handleSearch();
+          }
+}
 const handleSearch = () => {
-        onSearch(searchQuery);
+        if(searchQuery === '') {
+            alert("Input field cannot be empty")
+        }else {
+            setFilled(false)
+            onSearch(searchQuery);
+        }
   };
   return (
     <nav className={`w-full justify-between items-center px-3 py-4 lg:px-8 lg:py-5 ${otherStyles} bg-white z-20`}>
@@ -24,7 +37,7 @@ const handleSearch = () => {
 
             <div className="w-full max-w-[20rem] md:max-w-2xl flex justify-between items-center p-2 lg:p-3 bg-gray-200 lg:bg-gray-300 rounded-full lg:rounded-lg">
                 <BsImages className='w-5 h-5 hidden md:block'/>
-                <input type="text" placeholder="Search for photos..." className="w-[70%] h-full outline-none border-none stroke-none text-gray-700 text-sm md:text-lg bg-transparent" onChange={(e) =>{setSearchQuery(e.target.value)}}/>
+                <input type="text" placeholder="Search for photos..." required className="w-[70%] h-full outline-none border-none stroke-none text-gray-700 text-sm md:text-lg bg-transparent" value={searchQuery} onKeyDown={handlePress} onChange={(e) =>{setSearchQuery(e.target.value)}}/>
                 <button onClick={handleSearch}><BiSearch className='w-6 h-6 px-1 py-1 rounded-full bg-black text-white'/></button>
             </div>
         </div>
