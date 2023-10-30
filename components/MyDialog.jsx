@@ -53,7 +53,7 @@ const MyDialog = ({isOpen, closeModal, images}) => {
   return (
     // Use the `Transition` component at the root level
     <Transition show={isOpen} as={Fragment}>
-      <Dialog as='div' className="relative z-30"  onClose={closeModal}>
+      <Dialog as='div' className="relative z-30 w-screen h-screen"  onClose={closeModal}>
         {/*
           Use one Transition.Child to apply one transition to the backdrop...
         */}
@@ -73,8 +73,8 @@ const MyDialog = ({isOpen, closeModal, images}) => {
           ...and another Transition.Child to apply a separate transition
           to the contents.
         */}
-        <div className="fixed inset-0 overflow-y-auto">
-        <div className="flex min-h-full items-center justify-center p-4 text-center">
+        <div className="fixed w-full h-full inset-0 overflow-y-auto">
+        <div className="w-full flex min-h-full items-center justify-center text-center">
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
@@ -84,7 +84,7 @@ const MyDialog = ({isOpen, closeModal, images}) => {
           leaveFrom="opacity-100 scale-100"
           leaveTo="opacity-0 scale-95"
         >
-          <Dialog.Panel className="relative w-full lg:max-w-5xl h-full lg:max-h-[95vh] overflow-y-auto overflow-hidden transform rounded-2xl bg-white p-6 text-left shadow-xl transition-all flex flex-col gap-5">
+          <Dialog.Panel className="relative w-full h-full lg:max-w-5xl lg:max-h-[95vh] overflow-y-auto overflow-hidden transform rounded-none lg:rounded-2xl bg-white p-3 lg:p-6 text-left shadow-xl transition-all flex flex-col gap-5">
 
             <button onClick={closeModal} className='absolute top-2 right-2 p-2 bg-gray-200 rounded-full outline-none border-none stroke-none'><BsX className='w-6 h-6'/></button>
 
@@ -113,7 +113,7 @@ const MyDialog = ({isOpen, closeModal, images}) => {
                 <button className="h-full hidden md:block bg-black/90 hover:bg-black text-white text-lg w-[75%]" onClick={() => {handleDownloadImage(urls.small, description)}}>
                   Free Download
                 </button>
-                <button className="h-full bg-black/90  hover:bg-black w-[100%] lg:[25%] flex items-center justify-center" onClick={() => {setDownloadToggle(!downloadToggle), handleClick}}>
+                <button className="h-full bg-black/90  hover:bg-black w-[100%] md:w-[25%] flex items-center justify-center" onClick={() => {setDownloadToggle(!downloadToggle), handleClick}}>
                   <BiChevronDown className={`text-white w-7 h-7 transition-all duration-300 ${downloadToggle ? 'rotate-180' : 'rotate-0'}`} />
                 </button>
 

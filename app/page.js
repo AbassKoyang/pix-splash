@@ -12,12 +12,12 @@ export default function Home() {
   const [images, setImages] = useState([]);
   const [navbar, setNavbar] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [showMore, setShowMore] = useState(40);
 
   const fetchInitialImages = async () => {
     setLoading(true)
     const results = await fetchImages('nature'); // Change 'default_search_term' to the term you want to use.
-    setImages(results);
-    console.log(results);
+    setImages(results);;
     setLoading(false)
   };
 
@@ -60,6 +60,7 @@ export default function Home() {
       ))}
       </div>
       </div>
+      <button onClick={() => {setShowMore(showMore+10)}}>Show More</button>
     </main>
   )
 }
