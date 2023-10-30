@@ -84,7 +84,7 @@ const MyDialog = ({isOpen, closeModal, images}) => {
           leaveFrom="opacity-100 scale-100"
           leaveTo="opacity-0 scale-95"
         >
-          <Dialog.Panel className="relative w-full max-w-5xl max-h-[95vh] overflow-y-auto overflow-hidden transform rounded-2xl bg-white p-6 text-left shadow-xl transition-all flex flex-col gap-5">
+          <Dialog.Panel className="relative w-full lg:max-w-5xl h-full lg:max-h-[95vh] overflow-y-auto overflow-hidden transform rounded-2xl bg-white p-6 text-left shadow-xl transition-all flex flex-col gap-5">
 
             <button onClick={closeModal} className='absolute top-2 right-2 p-2 bg-gray-200 rounded-full outline-none border-none stroke-none'><BsX className='w-6 h-6'/></button>
 
@@ -92,28 +92,28 @@ const MyDialog = ({isOpen, closeModal, images}) => {
 
             <div className="w-full flex justify-between items-center mt-8">
               <div className="flex items-center justify-center gap-3">
-              <Link href='/' className='object-contain'><img src={user.profile_image.small} className='w-12 h-12 rounded-full object-contain'></img></Link>
+              <Link href='/' className='object-contain'><img src={user.profile_image.small} className='w-14 h-14 rounded-full object-contain'></img></Link>
 
               <div className="flex flex-col gap-0.5">
-                <p className='text-xl font-bold capitalize text-black'>{user.name}</p>
-                <Link href='/'><p className='text-lg font-medium capitalize text-gray-600'>{user.username}</p></Link>
+                <p className='text-lg md:text-xl font-bold capitalize text-black'>{user.name}</p>
+                <Link href='/'><p className='text-sm md:text-lg font-medium capitalize text-gray-600'>{user.username}</p></Link>
               </div>
               </div>
 
               <div className="flex gap-4">
-                <button className="px-3 py-1 bg-transparent border border-gray-300 hover:border-black transition-all duration-300 flex gap-2 items-center">
+                <button className="hidden lg:flex px-3 py-1 bg-transparent border border-gray-300 hover:border-black transition-all duration-300 gap-2 items-center">
                   <BsBookmarks/>
                   <p className='text-lg text-gray-900 font-medium'>Save</p>
                 </button>
-                <button className="px-3 py-1 bg-transparent border border-gray-300 hover:border-black transition-all duration-300 flex gap-2 items-center">
+                <button className="hidden lg:flex px-3 py-1 bg-transparent border border-gray-300 hover:border-black transition-all duration-300 gap-2 items-center">
                   <p className='text-lg text-gray-900'> <span className='text-black font-medium'>{likes}</span> Likes</p>
                 </button>
 
-                <div className="flex items-center w-[220px] h-10 relative">
-                <button className="h-full bg-black/90 hover:bg-black text-white text-lg w-[75%]" onClick={() => {handleDownloadImage(urls.small, description)}}>
+                <div className="flex items-center w-[40px] lg:w-[220px] h-[40px] lg:h-10 rounded-md lg:rounded-none relative">
+                <button className="h-full hidden md:block bg-black/90 hover:bg-black text-white text-lg w-[75%]" onClick={() => {handleDownloadImage(urls.small, description)}}>
                   Free Download
                 </button>
-                <button className="h-full bg-black/90  hover:bg-black w-[25%] flex items-center justify-center" onClick={() => {setDownloadToggle(!downloadToggle), handleClick}}>
+                <button className="h-full bg-black/90  hover:bg-black w-[100%] lg:[25%] flex items-center justify-center" onClick={() => {setDownloadToggle(!downloadToggle), handleClick}}>
                   <BiChevronDown className={`text-white w-7 h-7 transition-all duration-300 ${downloadToggle ? 'rotate-180' : 'rotate-0'}`} />
                 </button>
 
@@ -163,23 +163,27 @@ const MyDialog = ({isOpen, closeModal, images}) => {
             <h1 className='text-gray-800 text-lg font-medium text-left mt-2'>{description}</h1>
 
             <div className="w-full flex justify-between items-center mt-4">
-              <button className='flex items-center gap-1 text-gray-600 bg-transparent'><AiFillCheckCircle className='text-gray-600'/>Free to use</button>
+              <button className='hidden md:flex items-center gap-1 text-gray-600 bg-transparent'><AiFillCheckCircle className='text-gray-600'/>Free to use</button>
 
               <div className="flex items-center gap-3">
 
+              <button className="flex lg:hidden px-3 py-1 bg-transparent border border-gray-300 hover:border-black transition-all duration-300 gap-2 items-center">
+                  <BsBookmarks/>
+                  <p className='text-sm lg:text-lg text-gray-900 font-medium'>Save</p>
+                </button>
+
               <button className="px-3 py-1 bg-transparent border border-gray-300 hover:border-black transition-all duration-300 flex gap-2 items-center" onClick={() => {setMoreInfoModal(true)}}>
                 <BsFillInfoCircleFill className='text-gray-600'/>
-                <p className='text-lg text-black font-medium'>More Info</p>
-
-                <MoreInfo closeModal={() => {setMoreInfoModal(false)}} isOpen={moreInfoModal} image={images} />
+                <p className='text-sm lg:text-lg text-black font-medium'>More Info</p>
               </button>
 
               <button className="px-3 py-1 bg-transparent border border-gray-300 hover:border-black transition-all duration-300 flex gap-2 items-center">
                 <RiShareBoxFill className='text-gray-600'/>
-                <p className='text-lg text-black font-medium'>Share</p>
+                <p className='text-sm lg:text-lg text-black font-medium'>Share</p>
               </button>
             </div>
             </div>
+            <MoreInfo closeModal={() => {setMoreInfoModal(false)}} isOpen={moreInfoModal} image={images} />
           </Dialog.Panel>
         </Transition.Child>
         </div>
