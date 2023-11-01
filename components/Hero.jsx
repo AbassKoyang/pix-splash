@@ -5,11 +5,15 @@ import { pixsplashbg } from '@/public';
 import { BiSearch } from 'react-icons/bi'
 import { BsImages } from 'react-icons/bs'
 import { FaLastfmSquare } from 'react-icons/fa';
+import { useDispatch, useSelector } from 'react-redux';
+import { setSearchQuery } from '@/redux/searchSplice';
+import store from '@/redux/store';
 
 
 const Hero = ({onSearch}) => {
-const [searchQuery, setSearchQuery] = useState('');
-const [filled, setFilled] = useState(false)
+const [filled, setFilled] = useState(false);
+const dispatch = useDispatch();
+const query = useSelector((state) => state.search.query);
 
 
 const handlePress = (event) => {
@@ -19,12 +23,19 @@ const handlePress = (event) => {
       }
 }
 
+const handleQueryChange = (e) => {
+    const value = e.target.value;
+    dispatch(setSearchQuery(value))
+    console.log(value);
+    console.log(query)
+}
 const handleSearch = () => {
-    if(searchQuery === '') {
+    if(query === '') {
         setFilled(true)
     }else {
-        setFilled(false)
-        onSearch(searchQuery);
+        setFilled(false);
+        onSearch(query);
+        console.log(query)
     }
   };
   return (
@@ -47,9 +58,9 @@ const handleSearch = () => {
                     type="text"
                     placeholder="Search for photos..." 
                     className="w-[70%] h-full outline-none border-none stroke-none text-gray-700 bg-white" 
-                    value={searchQuery}
+                    value={query}
                     onKeyDown={handlePress}
-                    onChange={(e) =>{setSearchQuery(e.target.value)}}
+                    onChange={(e) => {handleQueryChange(e)}}
                 />
                 <button
                   type='button'

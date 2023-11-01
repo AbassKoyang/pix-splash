@@ -7,16 +7,19 @@ import Hero from '@/components/Hero';
 import Feed from '@/components/Feed';
 import { fetchImages } from '@/utils';
 import Sidebar from '@/components/Sidebar';
+import ShowMore from '@/components/ShowMore';
+import { useSelector } from 'react-redux';
 
 export default function Home() {
   const [images, setImages] = useState([]);
   const [navbar, setNavbar] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [showMore, setShowMore] = useState(40);
+  const [pagination, setPagination] = useState(3);
+  const searchQuery = useSelector((state) => state.search.query)
 
   const fetchInitialImages = async () => {
     setLoading(true)
-    const results = await fetchImages('nature'); // Change 'default_search_term' to the term you want to use.
+    const results = await fetchImages(searchQuery, pagination); // Change 'default_search_term' to the term you want to use.
     setImages(results);;
     setLoading(false)
   };
@@ -25,11 +28,37 @@ export default function Home() {
     fetchInitialImages();
   }, []);
 
-  const handleSearch = async (query) => {
+  const handleSearch = async () => {
     setLoading(true)
-    const results = await fetchImages(query);
+    const results = await fetchImages(searchQuery, pagination);
     setImages(results);
     setLoading(false)
+  };
+
+  const handleIncrement = async () => {
+      setPagination(4)
+      setLoading(true)
+      const results = await fetchImages(searchQuery, pagination);
+      setImages(results);
+      setLoading(false)
+      console.log(pagination)
+  }
+ 
+  const handleDecrement =  () => {
+    // Use the callback function of setPagination to ensure that pagination is updated first
+    setPagination(prevPagination => {
+      return prevPagination - 1; // Update pagination and return the new value
+    });
+  
+    handleNextSearch();
+  };
+
+  const handleNextSearch = async () => {
+    setLoading(true);
+    const results = await fetchImages(searchQuery, pagination);
+    console.log(pagination);
+    setImages(results);
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -60,7 +89,10 @@ export default function Home() {
       ))}
       </div>
       </div>
-      <button onClick={() => {setShowMore(showMore+10)}}>Show More</button>
+      <div className="w-full p-3 bg-white flex items-center justify-between">
+        <ShowMore title='Prev' iconStyles={`${pagination < 1 ? 'opacity-0' : 'opacity-1'} w-8 h-8 order-1 rotate-180`} handlePagination={handleDecrement}/>
+        <ShowMore title='Next' iconStyles='w-8 h-8' handlePagination={handleIncrement}/>
+      </div>
     </main>
   )
 }
