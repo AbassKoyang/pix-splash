@@ -5,7 +5,7 @@ import { Dialog, Transition } from '@headlessui/react'
 import { BsArrowLeft, BsBookmarks, BsCheck2, BsFillInfoCircleFill, BsSave, BsX } from 'react-icons/bs';
 import Image from 'next/image';
 import Link from 'next/link';
-import { BiChevronDown, BiSolidChevronLeft } from 'react-icons/bi';
+import { BiArrowBack, BiChevronDown, BiSolidArrowToLeft, BiSolidChevronLeft } from 'react-icons/bi';
 import { AiFillCheckCircle } from 'react-icons/ai';
 import { RiShareBoxFill } from 'react-icons/ri';
 import { FaArrowLeft } from 'react-icons/fa';
@@ -88,18 +88,21 @@ const MyDialog = ({isOpen, closeModal, images}) => {
           <Dialog.Panel className="relative w-full h-full lg:max-w-5xl lg:max-h-[95vh] overflow-y-auto overflow-hidden transform rounded-none lg:rounded-2xl bg-white p-3 lg:p-6 text-left shadow-xl transition-all flex flex-col gap-5">
 
             <button onClick={closeModal} className='absolute top-2 right-2 p-2 bg-gray-200 rounded-full outline-none border-none stroke-none hidden lg:block'><BsX className='w-6 h-6'/></button>
-            <button onClick={closeModal} className='absolute top-2 left-2 rounded-full outline-none border-none stroke-none lg:hidden'><BiSolidChevronLeft className='w-8 h-8'/></button>
 
             {/* Nav */}
 
-            <div className="w-full flex justify-between items-center mt-10 lg:mt-8">
-              <div className="flex items-center justify-center gap-3">
-              <Link href='/' className='object-contain'><img src={user.profile_image.small} className='w-14 h-14 rounded-full object-contain'></img></Link>
+            <div className="w-full flex justify-between items-center mt-4 lg:mt-8">
+                <div className="flex gap-2 items-center">
+                  <button onClick={closeModal} className='rounded-full outline-none border-none stroke-none lg:hidden'><BiArrowBack className='w-8 h-8'/></button>
 
-              <div className="flex flex-col gap-0.5">
-                <p className='text-lg md:text-xl font-bold capitalize text-black'>{user.name}</p>
-                <Link href='/'><p className='text-sm md:text-lg font-medium capitalize text-gray-600'>{user.username}</p></Link>
-              </div>
+                  <div className="flex items-center justify-center gap-3">
+                    <Link href='/' className='object-contain'><img src={user.profile_image.small} className='w-14 h-14 rounded-full object-contain'></img></Link>
+
+                    <div className="flex flex-col gap-0.5">
+                      <p className='text-lg md:text-xl font-bold capitalize text-black'>{user.name}</p>
+                      <Link href='/'><p className='text-sm md:text-lg font-medium capitalize text-gray-600'>{user.username}</p></Link>
+                    </div>
+                </div>
               </div>
 
               <div className="flex gap-4">
@@ -158,13 +161,13 @@ const MyDialog = ({isOpen, closeModal, images}) => {
 
             {/* Image */}
 
-            <div className="w-full h-[500px] object-fill flex flex-col items-start justify-center">
-              <img src={urls.regular} className='w-full h-full' />
+            <div className="w-full h-fit object-fill flex flex-col items-start justify-center">
+              <img src={urls.full} className='w-full h-full' />
             </div>
 
             <h1 className='text-gray-800 text-lg font-medium text-left mt-2'>{description}</h1>
 
-            <div className="w-full flex justify-between items-center mt-4">
+            <div className="w-full flex justify-between items-center my-2">
               <button className='hidden md:flex items-center gap-1 text-gray-600 bg-transparent'><AiFillCheckCircle className='text-gray-600'/>Free to use</button>
 
               <div className="flex items-center gap-3">
@@ -174,7 +177,7 @@ const MyDialog = ({isOpen, closeModal, images}) => {
                   <p className='text-sm lg:text-lg text-gray-900 font-medium'>Save</p>
                 </button>
 
-              <button className="px-3 py-1 bg-transparent border border-gray-300 hover:border-black transition-all duration-300 flex gap-2 items-center" onClick={() => {setMoreInfoModal(true)}}>
+              <button className="px-3 py-1 bg-transparent border border-gray-300 hover:border-black transition-all duration-300 flex gap-2 items-center" onClick={() => {setMoreInfoModal((prev)=> !prev)}}>
                 <BsFillInfoCircleFill className='text-gray-600'/>
                 <p className='text-sm lg:text-lg text-black font-medium'>More Info</p>
               </button>
@@ -185,7 +188,7 @@ const MyDialog = ({isOpen, closeModal, images}) => {
               </button>
             </div>
             </div>
-            <MoreInfo closeModal={() => {setMoreInfoModal(false)}} isOpen={moreInfoModal} image={images} />
+            <MoreInfo isOpen={moreInfoModal} image={images} />
           </Dialog.Panel>
         </Transition.Child>
         </div>

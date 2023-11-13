@@ -4,7 +4,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const searchSlice = createSlice({
   name: 'search',
   initialState: {
-    query: 'chickens',
+    query: 'random images',
   },
   reducers: {
     setSearchQuery: (state, action) => {

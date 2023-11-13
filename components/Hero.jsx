@@ -40,8 +40,8 @@ const handleSearch = () => {
   };
   return (
 
-    <section className='w-full h-[500px] bg-contain' style={{ backgroundImage: "url(https://images.pexels.com/photos/18785909/pexels-photo-18785909.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=500)" }}>
-        <div className="w-full h-full absolute bg-black bg-opacity-60 z-0"/>
+    <section className='w-full h-[500px] bg-contain relative' style={{ backgroundImage: "url(https://images.pexels.com/photos/18785909/pexels-photo-18785909.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=500)" }}>
+        <div className="w-full h-[500px] top-0 left-0 absolute bg-black bg-opacity-60 z-0"/>
         <nav className={`w-full flex justify-between items-center px-4 py-8 lg:px-8 lg:py-5 bg-transparent z-10`}>
                 <Link href='/' className="text-3xl font-extrabold text-white z-10">
                     PixSplash
