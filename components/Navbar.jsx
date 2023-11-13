@@ -1,5 +1,5 @@
 "use client";
-import React , {useState} from 'react';
+import React , {useState, useEffect} from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { BiSearch } from 'react-icons/bi';
@@ -9,8 +9,11 @@ import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { setSearchQuery } from '@/redux/searchSplice';
 import {motion, useAnimation } from 'framer-motion';
+import { useSession, signIn, signOut, getProviders, SessionProvider } from "next-auth/react";
 
 const Navbar = ({otherStyles, onSearch }) => {
+const { data: session } = useSession() ;
+const [provider, setProvider] = useState(null)
 const [filled, setFilled] = useState(false)
 const dispatch = useDispatch();
 const query = useSelector((state) => state.search.query);
@@ -18,6 +21,15 @@ const [menuToggle, setMenuToggle] = useState(false)
 // State to toggle animation
 const [isAnimating, setIsAnimating] = useState(false);
 
+useEffect(()=>{
+    const setUpProviders = async () =>{
+        const response = await getProviders();
+        setProvider(response);
+        console.log(response)
+        console.log(process.env.GOOGLE_CLIENT_ID)
+    }
+    setUpProviders();
+},[]);
 
 const handlePress = (event) => {
         if (event.key === 'Enter') {
@@ -48,6 +60,8 @@ const handleSearch = () => {
         setIsAnimating(true);
         await controls.start({ x: 0, opacity: 1 });
       };
+
+
   return (
     <nav className={`w-full justify-between items-center px-3 py-4 lg:px-8 lg:py-5 ${otherStyles} bg-white z-20`}>
         <div className="w-full max-w-[90%] md:justify-between md:max-w-[80%] lg:max-w-[60%] flex items-center gap-5 lg:gap-14">
@@ -64,7 +78,10 @@ const handleSearch = () => {
                 <button onClick={handleSearch}><BiSearch className='w-6 h-6 px-1 py-1 rounded-full bg-black text-white'/></button>
             </div>
         </div>
-
+        
+        {session && (
+            <Image src={session.user.image} alt='Profile Image' width={70} height={70} className='object-contain'/>
+        )}
         <button className='relative block lg:hidden transition-all duration-300' onClick={() => {setMenuToggle(!menuToggle), handleClick}}>
             {!menuToggle ? (<FiMenu className='w-6 h-6 transition-all duration-300'/>) : (<FiX className='w-6 h-6 transition-all duration-300'/>)}
             {menuToggle && (
@@ -81,9 +98,23 @@ const handleSearch = () => {
             </motion.div>
             )}
         </button>
-        <button className='px-4 py-3 rounded-md bg-black text-white text-lg font-normal hidden lg:block'>Sign In</button>
+
+        {provider &&
+
+                Object.values(provider).map((providerTwo) =>(
+                    <button 
+                    type="button"
+                    key={providerTwo.name}
+                    onClick={() => signIn(providerTwo.id)}
+                    className='px-4 py-3 rounded-md bg-black text-white text-lg font-normal hidden lg:block'
+                    >
+                     Sign In
+                    </button>
+                ))
+                
+        }
     </nav>
   )
-}
+};
 
 export default Navbar
