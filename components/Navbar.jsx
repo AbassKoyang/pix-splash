@@ -88,7 +88,7 @@ const handleSearch = () => {
                         initial={{ x: '100%', opacity: 0 }}
                         animate={isAnimating ? controls : { x: '0', opacity: 1 }}
                         transition={{ duration: 0.7 }}
-                        className="w-[90vw] md:max-w-md  absolute flex flex-col gap-3 items-start justify-center bottom-[-310px] right-2 bg-white shadow-lg p-6 rounded-md"
+                        className="w-[90vw] md:max-w-md absolute flex flex-col gap-3 items-start justify-center bottom-[-310px] right-2 bg-white shadow-lg p-6 rounded-md"
                     >
                         <div className="w-full flex flex-col items-center justify-center gap-2">
                             <Image src={session.user.image} width={90} height={90} alt='Profile Image' className='object-contain rounded-full'/>
@@ -96,9 +96,10 @@ const handleSearch = () => {
                         </div>
                         <Link href='/' className='text-gray-700 font-normal text-sm'>Favourites</Link>
                         <Link href='/' className='text-gray-700 font-normal text-sm'>Saved</Link>
-                        <button className="w-full border-t-[0.5px] border-gray-100 pt-3 text-black0" onClick={() => signOut()}>
+                        <button className="w-full border-t-[0.5px] border-gray-100 pt-3 text-black" onClick={() => signOut()}>
                             Sign Out
                         </button>
+                        <button className='rounded-full bg-gray-200 p-2 absolute top-1 right-1'><FiX className='w-4 h-4'/></button>
                     </motion.div>
                     )}
                 </button>
@@ -106,6 +107,32 @@ const handleSearch = () => {
             ) : (
 
                    <>
+                   <button className='relative block lg:hidden' onClick={()=> setMenuToggle(!menuToggle)}>
+                   {!menuToggle ? (<FiMenu className='w-8 h-8'/>) : (<FiX className='w-8 h-8'/>)}
+                    {menuToggle && (
+                        <motion.div
+                        initial={{ x: '100%', opacity: 0 }}
+                        animate={isAnimating ? controls : { x: '0', opacity: 1 }}
+                        transition={{ duration: 0.7 }}
+                        className="w-[150px] absolute flex flex-col gap-3 items-center justify-center top-14 right-2 bg-white shadow-lg p-6 rounded-md"
+                    >
+                        { provider &&
+
+                        Object.values(provider).map((providerTwo) =>(
+                            <button 
+                            type="button"
+                            key={providerTwo.name}
+                            onClick={() => signIn(providerTwo.id)}
+                            className='px-3 py-2 rounded-full text-white bg-black'
+                            >
+                            Sign In
+                            </button>
+                        ))       
+                }
+                    </motion.div>
+                    )}
+                    </button>
+
                     { provider &&
 
                         Object.values(provider).map((providerTwo) =>(
