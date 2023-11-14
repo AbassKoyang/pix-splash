@@ -3,7 +3,7 @@ import { BiChevronRight } from 'react-icons/bi';
 
 const ShowMore = ({title, iconStyles, handleShowMore}) => {
   return (
-    <button className='flex items-center justify-center px-4 py-2 rounded-full bg-black text-white text-sm font-medium lg:text-lg' onClick={handleShowMore}>
+    <button className='flex items-center justify-center px-4 py-2 rounded-md bg-black text-white text-sm font-medium lg:text-lg' onClick={handleShowMore}>
       {title}
     </button>
   )

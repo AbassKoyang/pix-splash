@@ -70,7 +70,7 @@ const handleSearch = () => {
                 PS
             </Link>
 
-            <div className="w-full max-w-[22rem] md:max-w-2xl flex justify-between items-center p-2 pl-3 lg:p-3 bg-gray-200 lg:bg-gray-300 rounded-full lg:rounded-lg">
+            <div className="w-full max-w-[15rem] md:max-w-2xl flex justify-between items-center p-2 pl-3 lg:p-3 bg-gray-200 lg:bg-gray-300 rounded-full lg:rounded-lg">
                 <BsImages className='w-5 h-5 hidden md:block'/>
                 <input type="text" placeholder="Search for photos..." required className="w-[70%] h-full outline-none border-none stroke-none text-gray-700 text-sm md:text-lg bg-transparent" value={query} onKeyDown={handlePress} onChange={(e) => {handleQueryChange(e)}}/>
                 <button onClick={handleSearch}><BiSearch className='w-6 h-6 px-1 py-1 rounded-full bg-black text-white'/></button>
@@ -80,7 +80,28 @@ const handleSearch = () => {
 
         {session?.user ? (
 
-                <Image src={session.user.image} alt='Profile Image' width={50} height={50} className='object-contain rounded-full'/>
+                
+                <button className='relative block transition-all duration-300' onClick={() => {setMenuToggle(!menuToggle), handleClick}}>
+                    <Image src={session.user.image} alt='Profile Image' width={50} height={50} className='object-contain rounded-full'/>
+                    {menuToggle && (
+                        <motion.div
+                        initial={{ x: '100%', opacity: 0 }}
+                        animate={isAnimating ? controls : { x: '0', opacity: 1 }}
+                        transition={{ duration: 0.7 }}
+                        className="w-[90vw] md:max-w-md  absolute flex flex-col gap-3 items-start justify-center bottom-[-310px] right-2 bg-white shadow-lg p-6 rounded-md"
+                    >
+                        <div className="w-full flex flex-col items-center justify-center gap-2">
+                            <Image src={session.user.image} width={90} height={90} alt='Profile Image' className='object-contain rounded-full'/>
+                            <p className='font-medium text-black text-lg'>{session.user.name}</p>
+                        </div>
+                        <Link href='/' className='text-gray-700 font-normal text-sm'>Favourites</Link>
+                        <Link href='/' className='text-gray-700 font-normal text-sm'>Saved</Link>
+                        <button className="w-full border-t-[0.5px] border-gray-100 pt-3 text-black0" onClick={() => signOut()}>
+                            Sign Out
+                        </button>
+                    </motion.div>
+                    )}
+                </button>
 
             ) : (
 
@@ -101,50 +122,6 @@ const handleSearch = () => {
                    </>
 
             )}
-            
-            {/* Mobile toggle button */}
-        
-        {session?.user ? (
-                    <button className='relative block lg:hidden transition-all duration-300' onClick={() => {setMenuToggle(!menuToggle), handleClick}}>
-                    {!menuToggle ? (<FiMenu className='w-8 h-8 transition-all duration-300'/>) : (<FiX className='w-8 h-8 transition-all duration-300'/>)}
-                    {menuToggle && (
-                        <motion.div
-                        initial={{ x: '100%', opacity: 0 }}
-                        animate={isAnimating ? controls : { x: '0', opacity: 1 }}
-                        transition={{ duration: 0.7 }}
-                        className="w-[170px] absolute flex flex-col gap-3 items-center justify-center top-14 right-1 bg-white shadow-lg p-5 rounded-md"
-                    >
-                        <Link href='/' className='text-gray-700 font-normal text-sm'>Profile</Link>
-                        <Link href='/' className='text-gray-700 font-normal text-sm'>Favourites</Link>
-                        <Link href='/' className='text-gray-700 font-normal text-sm'>Saved</Link>
-                    </motion.div>
-                    )}
-                </button>
-        ) : (
-            <button className='relative block lg:hidden transition-all duration-300' onClick={() => {setMenuToggle(!menuToggle), handleClick}}>
-            {!menuToggle ? (<FiMenu className='w-8 h-8 transition-all duration-300'/>) : (<FiX className='w-8 h-8 transition-all duration-300'/>)}
-            {menuToggle && (
-                <motion.div
-                initial={{ x: '100%', opacity: 0 }}
-                animate={isAnimating ? controls : { x: '0', opacity: 1 }}
-                transition={{ duration: 0.7 }}
-                className="w-[170px] absolute flex flex-col gap-3 items-center justify-center top-14 right-1 bg-white shadow-lg p-5 rounded-md"
-            >
-                { provider &&
-
-                        Object.values(provider).map((providerTwo) =>(
-                            <button className='px-4 py-3 bg-black text-white text-sm text-medium rounded-full mt-2' 
-                            type='button'
-                            key={providerTwo.name}
-                            onClick={()=> signIn(providerTwo.id)}>
-                                Sign In/Up
-                            </button>
-                        ))       
-                }
-            </motion.div>
-            )}
-        </button>
-        )}
     </nav>
   )
 };

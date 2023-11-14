@@ -16,11 +16,12 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [pagination, setPagination] = useState(1);
   const searchQuery = useSelector((state) => state.search.query)
+  const [imagesCheck, setImagesCheck] = useState(false)
 
   const fetchInitialImages = async () => {
     setLoading(true)
     const newImages = await fetchImages(searchQuery, pagination);
-    setImages((prevImages) => [...prevImages, ...newImages]);
+    setImages(newImages);
     setLoading(false)
   };
 
@@ -28,18 +29,20 @@ export default function Home() {
     fetchInitialImages();
   }, [pagination]);
 
+
   const handleSearch = async () => {
-    setLoading(true)
-    setTimeout(() => {
-      setImages([])
-    }, 1200);
     const newImages = await fetchImages(searchQuery, pagination);
-    setImages((prevImages) => [...prevImages, ...newImages]);
+    setImages(newImages);
     setLoading(false)
   };
 
   const handleShowMore = () => {
     setPagination((prevPage) => prevPage + 1);
+    console.log(pagination);
+    console.log(searchQuery)
+  };
+  const handleShowLess = () => {
+    setPagination((prevPage) => prevPage - 1);
     console.log(pagination);
     console.log(searchQuery)
   };
@@ -72,8 +75,16 @@ export default function Home() {
       ))}
       </div>
       </div>
-      <div className={`w-full py-4 bg-white ${images.length < 1 ? 'hidden' : 'flex'} items-center justify-center`}>
-        <ShowMore title='Show More' handleShowMore={handleShowMore} />
+      <div className={`w-full py-4 px-2 bg-white ${images.length < 1 ? 'hidden' : 'flex'} items-center justify-center gap-5`}>
+      {pagination >= 2 && (
+          <ShowMore title='Prev' handleShowMore={handleShowLess} />
+        )
+        }
+
+        {pagination < 10 && (
+          <ShowMore title='Next' handleShowMore={handleShowMore} />
+        )
+        }
       </div>
     </main>
   )
