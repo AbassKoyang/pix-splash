@@ -16,7 +16,7 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [pagination, setPagination] = useState(1);
   const searchQuery = useSelector((state) => state.search.query)
-  const [imagesCheck, setImagesCheck] = useState(false)
+
 
   const fetchInitialImages = async () => {
     setLoading(true)
@@ -31,6 +31,7 @@ export default function Home() {
 
 
   const handleSearch = async () => {
+    setLoading(true)
     const newImages = await fetchImages(searchQuery, pagination);
     setImages(newImages);
     setLoading(false)
@@ -38,13 +39,9 @@ export default function Home() {
 
   const handleShowMore = () => {
     setPagination((prevPage) => prevPage + 1);
-    console.log(pagination);
-    console.log(searchQuery)
   };
   const handleShowLess = () => {
     setPagination((prevPage) => prevPage - 1);
-    console.log(pagination);
-    console.log(searchQuery)
   };
  
 

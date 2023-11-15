@@ -98,10 +98,10 @@ await controls.start({ x: 0, opacity: 1 });
 
                 <div className={`${isConfirmSignOut? 'flex justify-center items-center' : 'hidden'} fixed top-0 right-0 w-[100vw] h-[100vh]  bg-black/25 z-50`}>
                     <div className='p-4 rounded-md bg-white opacity-100'>
-                        <h1 className='font-medium text-xl md:text-3xl max-w-md mb-3'>Are you sure you want to sign out?</h1>
+                        <h1 className='font-medium text-lg md:text-3xl max-w-sm md:max-w-md mb-3'>Are you sure you want to sign out?</h1>
                         <div className="flex items-center gap-3">
-                            <button className='px-3 py-2 rounded-full text-white bg-black' onClick={() => signOut()}>Sign Out</button>
-                            <button className='text-lg text-gray-700 font-medium'onClick={() => setIsConfirmSignOut(false)}>Cancel</button>
+                            <button className='px-2 py-1 lg:px-3 lg:py-2 text-[12px] md:text-lg rounded-full text-white bg-black' onClick={() => signOut()}>Sign Out</button>
+                            <button className='text-[14px] md:text-lg text-gray-700 font-medium'onClick={() => setIsConfirmSignOut(false)}>Cancel</button>
                         </div>
                     </div>
                     </div>

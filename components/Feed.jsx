@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { BiDownload, BiHeart } from 'react-icons/bi';
 import SkeletonLoader from './skeleton';
 import MyDialog from './MyDialog';
-
+import {toast, Toaster} from 'react-hot-toast';
 const Feed = ({ image, dataLoaded }) => {
     async function handleDownloadImage(imageUrl, suggestedFileName) {
         try {
@@ -19,8 +19,10 @@ const Feed = ({ image, dataLoaded }) => {
           document.body.appendChild(a);
           a.click();
           window.URL.revokeObjectURL(url);
+          toast.success("Your download has started...")
         } catch (error) {
           console.error('Download failed:', error);
+          toast.error("Failed to download image");
         }
       };
       let [isOpen, setIsOpen] = useState(false);
