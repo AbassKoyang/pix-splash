@@ -65,7 +65,7 @@ export default function Home() {
   }, [])
   
   return (
-    <main className="min-h-screen bg-white">
+    <main className="min-h-screen bg-white overflow-x-hidden">
       <Navbar onSearch={handleSearch} otherStyles={`${navbar ? 'fixed top-0 flex' : 'hidden'}`} />
       <Hero onSearch={handleSearch} />
       <div className="grid grid-cols-4 mt-0 gap-8 bg-white p-3">

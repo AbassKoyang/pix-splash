@@ -12,14 +12,15 @@ import {motion, useAnimation } from 'framer-motion';
 import { useSession, signIn, signOut, getProviders, SessionProvider } from "next-auth/react";
 
 const Navbar = ({otherStyles, onSearch }) => {
+
 const { data: session } = useSession() ;
 const [provider, setProvider] = useState(null)
 const [filled, setFilled] = useState(false)
 const dispatch = useDispatch();
 const query = useSelector((state) => state.search.query);
 const [menuToggle, setMenuToggle] = useState(false)
-// State to toggle animation
 const [isAnimating, setIsAnimating] = useState(false);
+const [isConfirmSignOut, setIsConfirmSignOut] = useState(false);
 
 useEffect(()=>{
     const setUpProviders = async () =>{
@@ -35,12 +36,14 @@ const handlePress = (event) => {
             handleSearch();
           }
 }
+
 const handleQueryChange = (e) => {
     const value = e.target.value;
     dispatch(setSearchQuery(value))
     console.log(value);
     console.log(query)
 }
+
 const handleSearch = () => {
         if(query === '') {
             alert("Input field cannot be empty")
@@ -50,19 +53,16 @@ const handleSearch = () => {
         }
   };
 
-      // Framer Motion controls
-      const controls = useAnimation();
-    
-      // Function to handle the button click
-      const handleClick = async () => {
-        setIsAnimating(true);
-        await controls.start({ x: 0, opacity: 1 });
-      };
+const controls = useAnimation();
+const handleClick = async () => {
+setIsAnimating(true);
+await controls.start({ x: 0, opacity: 1 });
+};
 
 
   return (
     <nav className={`w-full justify-between items-center px-3 py-4 lg:px-8 lg:py-5 ${otherStyles} bg-white z-20`}>
-        <div className="w-full max-w-[90%] md:justify-between md:max-w-[80%] lg:max-w-[60%] flex items-center gap-5 lg:gap-14">
+        <div className="w-full max-w-[90%] md:justify-between md:max-w-[80%] lg:max-w-[80%] flex items-center gap-5 lg:gap-14">
             <Link href='/' className="text-2xl font-bold text-black hidden lg:block">
                 PixSplash
             </Link>
@@ -70,7 +70,7 @@ const handleSearch = () => {
                 PS
             </Link>
 
-            <div className="w-full max-w-[15rem] md:max-w-2xl flex justify-between items-center p-2 pl-3 lg:p-3 bg-gray-200 lg:bg-gray-300 rounded-full lg:rounded-lg">
+            <div className="w-full max-w-[15rem] md:max-w-4xl flex justify-between items-center p-2 pl-3 lg:p-3 bg-gray-200 lg:bg-gray-300 rounded-full">
                 <BsImages className='w-5 h-5 hidden md:block'/>
                 <input type="text" placeholder="Search for photos..." required className="w-[70%] h-full outline-none border-none stroke-none text-gray-700 text-sm md:text-lg bg-transparent" value={query} onKeyDown={handlePress} onChange={(e) => {handleQueryChange(e)}}/>
                 <button onClick={handleSearch}><BiSearch className='w-6 h-6 px-1 py-1 rounded-full bg-black text-white'/></button>
@@ -80,15 +80,16 @@ const handleSearch = () => {
 
         {session?.user ? (
 
-                
-                <button className='relative block transition-all duration-300' onClick={() => {setMenuToggle(!menuToggle), handleClick}}>
+                <>
+                <button className='block transition-all duration-300' onClick={() => {setMenuToggle(!menuToggle), handleClick}}>
                     <Image src={session.user.image} alt='Profile Image' width={50} height={50} className='object-contain rounded-full'/>
+                </button>
                     {menuToggle && (
                         <motion.div
                         initial={{ x: '100%', opacity: 0 }}
                         animate={isAnimating ? controls : { x: '0', opacity: 1 }}
                         transition={{ duration: 0.7 }}
-                        className="w-[90vw] md:max-w-md absolute flex flex-col gap-3 items-start justify-center bottom-[-310px] right-2 bg-white shadow-lg p-6 rounded-md"
+                        className="w-[90vw] md:max-w-md fixed flex flex-col gap-3 items-start justify-center top-24 right-2 md:right-4 bg-white shadow-lg p-6 rounded-md"
                     >
                         <div className="w-full flex flex-col items-center justify-center gap-2">
                             <Image src={session.user.image} width={90} height={90} alt='Profile Image' className='object-contain rounded-full'/>
@@ -96,13 +97,23 @@ const handleSearch = () => {
                         </div>
                         <Link href='/' className='text-gray-700 font-normal text-sm'>Favourites</Link>
                         <Link href='/' className='text-gray-700 font-normal text-sm'>Saved</Link>
-                        <button className="w-full border-t-[0.5px] border-gray-100 pt-3 text-black" onClick={() => signOut()}>
+                        <button className="w-full border-t-[0.5px] border-gray-100 pt-3 text-black" onClick={() => {setMenuToggle(false), setIsConfirmSignOut(true), handleClick}}>
                             Sign Out
                         </button>
-                        <button className='rounded-full bg-gray-200 p-2 absolute top-1 right-1'><FiX className='w-4 h-4'/></button>
+                        <button className='rounded-full bg-gray-200 p-2 absolute top-1 right-1'><FiX className='w-4 h-4' onClick={()=> setMenuToggle(false)}/></button>
                     </motion.div>
                     )}
-                </button>
+
+                    <div className={`${isConfirmSignOut? 'flex justify-center items-center' : 'hidden'} fixed top-0 right-0 w-[100vw] h-[100vh]  bg-black/25`}>
+                    <div className='p-4 rounded-md bg-white opacity-100'>
+                        <h1 className='font-medium text-xl md:text-3xl max-w-md mb-3'>Are you sure you want to sign out?</h1>
+                        <div className="flex items-center gap-3">
+                            <button className='px-3 py-2 rounded-full text-white bg-black' onClick={() => signOut()}>Sign Out</button>
+                            <button className='text-lg text-gray-700 font-medium'onClick={() => setIsConfirmSignOut(false)}>Cancel</button>
+                        </div>
+                    </div>
+                    </div>
+                </>
 
             ) : (
 
