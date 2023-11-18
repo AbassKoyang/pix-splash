@@ -1,6 +1,7 @@
 "use client"
 import Image from 'next/image';
 import React from 'react';
+import toast from 'react-hot-toast';
 import Navbar from '@/components/Navbar';
 import { useState, useEffect } from 'react';
 import Hero from '@/components/Hero';
@@ -21,7 +22,11 @@ export default function Home() {
   const fetchInitialImages = async () => {
     setLoading(true)
     const newImages = await fetchImages(searchQuery, pagination);
-    setImages(newImages);
+    if(newImages.length > 0){
+      setImages(newImages);
+    } else {
+      toast.error("Oops! No result.")
+    }
     setLoading(false)
   };
 
@@ -33,7 +38,11 @@ export default function Home() {
   const handleSearch = async () => {
     setLoading(true)
     const newImages = await fetchImages(searchQuery, pagination);
-    setImages(newImages);
+    if(newImages.length > 0){
+      setImages(newImages);
+    } else {
+      toast.error("Oops! No result.")
+    }
     setLoading(false)
   };
 

@@ -20,3 +20,17 @@ export const fetchImages = async (searchQuery, page) => {
   }
 };
 
+export const fetchImageStats = async (id) => {
+  try {
+    const response = await fetch(`https://api.unsplash.com/photos/${id}/statistics?client_id=NYZmd55_VTMkgRhbnDUsQvBwV2tSjfoABwwu-Zp4uJ8`);
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching image stats:', error);
+    toast.error('Failed to fetch image stats')
+  }
+};
+

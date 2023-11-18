@@ -19,7 +19,7 @@ const Feed = ({ image, dataLoaded }) => {
           document.body.appendChild(a);
           a.click();
           window.URL.revokeObjectURL(url);
-          toast.success("Your download has started...")
+          toast.success("Your download has started.")
         } catch (error) {
           console.error('Download failed:', error);
           toast.error("Failed to download image");

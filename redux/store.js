@@ -1,11 +1,12 @@
 // store.js
 import { configureStore } from '@reduxjs/toolkit';
 import searchReducer from '@/redux/searchSplice';
+import statsReducer from '@/redux/statsSplice'
 
 const store = configureStore({
   reducer: {
     search: searchReducer,
-    // Add other reducers if you have them
+    stats: statsReducer,
   },
 });
 

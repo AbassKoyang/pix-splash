@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setSearchQuery } from '@/redux/searchSplice';
 import {motion, useAnimation } from 'framer-motion';
 import { useSession, getProviders, signIn, signOut } from 'next-auth/react';
+import { fetchImages } from '@/utils';
 
 
 const Hero = ({onSearch}) => {
@@ -27,6 +28,7 @@ useEffect(() => {
     const setUpProviders = async () => {
         const response = await getProviders();
         setProviders(response)
+        console.log(response)
     }
 
     setUpProviders();
@@ -55,6 +57,8 @@ const handleSearch = () => {
         console.log(query)
     }
   };
+
+
 
 const controls = useAnimation();
 const handleClick = async () => {
@@ -148,7 +152,13 @@ await controls.start({ x: 0, opacity: 1 });
                      />
                 </button>
             </form>
-            <p className={`text-gray-700 text-center font-normal text-lg mt-3 z-10 ${filled ? 'block' : 'hidden'}`}>Input field cannot be empty.</p>
+            <p className={`text-gray-700 text-center font-normal text-lg mx-3 z-10 ${filled ? 'block' : 'hidden'}`}>Input field cannot be empty.</p>
+            <div className="flex items-center gap-5">
+                <button className='px-4 py-3 text-lg text-white font-medium bg-black rounded-full'>Nature</button>
+                <button className='px-4 py-3 text-lg text-white font-medium bg-black rounded-full'>Nature</button>
+                <button className='px-4 py-3 text-lg text-white font-medium bg-black rounded-full'>Space</button>
+                <button className='px-4 py-3 text-lg text-white font-medium bg-black rounded-full'>Animals</button>
+            </div>
         </div>
     </section>
   )

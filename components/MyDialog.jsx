@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSession } from 'next-auth/react';
 import { motion, useAnimation } from 'framer-motion';
 import { useState, Fragment } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
@@ -9,15 +10,20 @@ import { BiArrowBack, BiChevronDown, BiSolidArrowToLeft, BiSolidChevronLeft } fr
 import { AiFillCheckCircle } from 'react-icons/ai';
 import { RiShareBoxFill } from 'react-icons/ri';
 import { FaArrowLeft } from 'react-icons/fa';
+import {toast, Toaster} from 'react-hot-toast';
 import MoreInfo from './MoreInfo';
+import SaveCollection from './SaveCollection';
 
 const MyDialog = ({isOpen, closeModal, images}) => {
 
+  const {data: session} = useSession();
   const {urls, links, user, id, color, likes, description, created_at, updated_at, width, height} = images;
   const [download, setDownload] = useState(urls.raw);
   const [downloadToggle, setDownloadToggle] = useState(false);
   const [active, setActive] = useState('original');
   const [moreInfoModal, setMoreInfoModal] = useState(false);
+  const [submitting, setIsSubmitting] = useState(false);
+  const [collectionModal, setCollectionModal] = useState(false);
 
     // State to toggle animation
     const [isAnimating, setIsAnimating] = useState(false);
@@ -31,7 +37,7 @@ const MyDialog = ({isOpen, closeModal, images}) => {
       await controls.start({ x: 0, opacity: 1 });
     };
 
-  async function handleDownloadImage(imageUrl, suggestedFileName) {
+  const handleDownloadImage = async (imageUrl, suggestedFileName) => {
     try {
       const response = await fetch(imageUrl);
       if (!response.ok) {
@@ -46,11 +52,41 @@ const MyDialog = ({isOpen, closeModal, images}) => {
       document.body.appendChild(a);
       a.click();
       window.URL.revokeObjectURL(url);
+      toast.success("Your download has started.");
     } catch (error) {
       console.error('Download failed:', error);
+      toast.error("Failed to download image, please try again.")
     }
   };
 
+
+  const createCollection = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch('/api/collections/new', {
+        method: "POST",
+        body: JSON.stringify({
+          title: "uduud",
+          content: images,
+          userId: session?.user.id,
+        })
+      })
+
+      if(response.ok){
+        toast.success('Collection created successfully!')
+      }
+      if(!response.ok){
+        toast.error('Could not create collection.')
+      }
+    } catch (error) {
+      console.log(error);
+    }finally{
+      setIsSubmitting(false)
+    }
+
+  }
   return (
     // Use the `Transition` component at the root level
     <Transition show={isOpen} as={Fragment}>
@@ -106,7 +142,9 @@ const MyDialog = ({isOpen, closeModal, images}) => {
               </div>
 
               <div className="flex gap-4">
-                <button className="hidden lg:flex px-3 py-1 bg-transparent border border-gray-300 hover:border-black transition-all duration-300 gap-2 items-center">
+                <button 
+                className="hidden lg:flex px-3 py-1 bg-transparent border border-gray-300 hover:border-black transition-all duration-300 gap-2 items-center"
+                onClick={()=> setCollectionModal(true)}>
                   <BsBookmarks/>
                   <p className='text-lg text-gray-900 font-medium'>Save</p>
                 </button>
@@ -172,7 +210,10 @@ const MyDialog = ({isOpen, closeModal, images}) => {
 
               <div className="flex items-center gap-3">
 
-              <button className="flex lg:hidden px-3 py-1 bg-transparent border border-gray-300 hover:border-black transition-all duration-300 gap-2 items-center">
+              <button
+               className="flex lg:hidden px-3 py-1 bg-transparent border border-gray-300 hover:border-black transition-all duration-300 gap-2 items-center"
+               onClick={()=> setCollectionModal(true)}
+              >
                   <BsBookmarks/>
                   <p className='text-sm lg:text-lg text-gray-900 font-medium'>Save</p>
                 </button>
@@ -188,10 +229,11 @@ const MyDialog = ({isOpen, closeModal, images}) => {
               </button>
             </div>
             </div>
-            <MoreInfo isOpen={moreInfoModal} image={images} />
           </Dialog.Panel>
         </Transition.Child>
         </div>
+        <SaveCollection isOpen={collectionModal}/>
+        <MoreInfo isOpen={moreInfoModal} image={images} closeModal={()=> setMoreInfoModal(false)} />
         </div>
       </Dialog>
     </Transition>
