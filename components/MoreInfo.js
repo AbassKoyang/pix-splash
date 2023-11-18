@@ -85,7 +85,7 @@ const MoreInfo = ({isOpen, image, closeModal,}) => {
   const truncatedLikes = truncateLikes();
     return (
        <div className={`w-[100vw] h-[100vh] fixed top-0 left-0 bg-black/25 ${isOpen ? 'flex' : 'hidden'} justify-center items-center `}>
-          <div className="relative w-full max-w-[28rem] md:max-w-xl bg-black pt-12 pb-0 rounded-xl overflow-hidden">
+          <div className="relative w-full max-w-[23rem] md:max-w-xl bg-black pt-12 pb-0 rounded-xl overflow-hidden">
             {stats != null ? (
               <>
               <button className='absolute top-3 right-3' onClick={closeModal}><BsX className='w-8 h-8 text-white'/></button>
@@ -112,7 +112,7 @@ const MoreInfo = ({isOpen, image, closeModal,}) => {
               </div>
             </div>
             <div className='w-full flex justify-center items-center p-6 md:p-12 mt-4 rounded-xl bg-white'>
-              <div className="flex gap-12 flex-col md:flex-row items-center justify-center">
+              <div className="flex gap-8 md:gap-12 flex-col md:flex-row items-center justify-center">
               <div className="flex flex-col items-center md:items-start gap-2">
                 <p className='text-gray-400 font-medium text-[15px]'>Dimension</p>
                 <h1 className='text-black font-normal text-xl'>{width} x {height}</h1>
@@ -140,14 +140,14 @@ const MoreInfo = ({isOpen, image, closeModal,}) => {
               </div>
             </div>
 
-            <div className='w-full flex flex-col gap-3 p-6 md:p-12 rounded-xl bg-white'>
-              <div className="w-full flex items-center justify-between">
+            <div className='w-full flex flex-col items-center justify-center md:items-start md:justify-start gap-3 p-6 md:p-12 rounded-xl bg-white'>
+              <div className="w-full flex flex-col md:flex-row items-center justify-between">
                 <div className="w-22 h-10 md:w-32 w-22 md:h-20 rounded-md animate-pulse bg-gray-300"></div>
                 <div className="w-22 h-10 md:w-32 w-22 md:h-20 rounded-md animate-pulse bg-gray-300"></div>
                 <div className="w-22 h-10 md:w-32 w-22 md:h-20 rounded-md animate-pulse bg-gray-300"></div>
               </div>
 
-              <div className="w-full flex items-center justify-between">
+              <div className="w-full hidden md:flex items-center justify-between">
                 <div className="w-22 h-10 md:w-32 w-22 md:h-20 rounded-md animate-pulse bg-gray-300"></div>
                 <div className="w-22 h-10 md:w-32 w-22 md:h-20 rounded-md animate-pulse bg-gray-300"></div>
                 <div className="w-22 h-10 md:w-32 w-22 md:h-20 rounded-md animate-pulse bg-gray-300"></div>

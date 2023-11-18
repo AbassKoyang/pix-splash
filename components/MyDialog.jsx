@@ -121,25 +121,25 @@ const MyDialog = ({isOpen, closeModal, images}) => {
           leaveFrom="opacity-100 scale-100"
           leaveTo="opacity-0 scale-95"
         >
-          <Dialog.Panel className="relative w-full h-full lg:max-w-5xl lg:max-h-[95vh] overflow-y-auto overflow-hidden transform rounded-none lg:rounded-2xl bg-white p-3 lg:p-6 text-left shadow-xl transition-all flex flex-col gap-5">
+          <Dialog.Panel className="relative w-full h-[100vh] lg:max-w-5xl lg:max-h-[95vh] overflow-y-auto overflow-hidden transform rounded-none lg:rounded-2xl bg-white p-3 lg:p-6 text-left shadow-xl transition-all flex flex-col gap-5">
 
             <button onClick={closeModal} className='absolute top-2 right-2 p-2 bg-gray-200 rounded-full outline-none border-none stroke-none hidden lg:block'><BsX className='w-6 h-6'/></button>
 
             {/* Nav */}
 
-            <div className="w-full flex justify-between items-center mt-4 lg:mt-8">
+            <div className="w-full flex justify-between items-center mt-4 lg:mt-8 sticky top-0">
                 <div className="flex gap-2 items-center">
                   <button onClick={closeModal} className='rounded-full outline-none border-none stroke-none lg:hidden'><BiArrowBack className='w-8 h-8'/></button>
 
                   <div className="flex items-center justify-center gap-3">
-                    <Link href='/' className='object-contain'><img src={user.profile_image.small} className='w-14 h-14 rounded-full object-contain'></img></Link>
+                    <Link href='/' className='object-contain'><img src={user.profile_image.small} className='w-14 h-14 md:w-16 md:h-16 rounded-full object-contain'></img></Link>
 
                     <div className="flex flex-col gap-0.5">
                       <p className='text-lg md:text-xl font-bold capitalize text-black'>{user.name}</p>
                       <Link href='/'><p className='text-sm md:text-lg font-medium capitalize text-gray-600'>{user.username}</p></Link>
                     </div>
-                </div>
-              </div>
+                  </div>
+               </div>
 
               <div className="flex gap-4">
                 <button 
@@ -199,8 +199,8 @@ const MyDialog = ({isOpen, closeModal, images}) => {
 
             {/* Image */}
 
-            <div className="w-full h-fit object-fill flex flex-col items-start justify-center">
-              <img src={urls.full} className='w-full h-full' />
+            <div className="w-full h-[80%] overflow-y-scroll object-fill flex flex-col items-start justify-center">
+              <img src={urls.full} className='w-full' />
             </div>
 
             <h1 className='text-gray-800 text-lg font-medium text-left mt-2'>{description}</h1>
