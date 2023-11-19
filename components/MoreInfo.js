@@ -1,35 +1,12 @@
 'use client'
 import React, {useState, Fragment, useEffect} from 'react';
 import Image from 'next/image';
-import toast from 'react-hot-toast';
 import { BsX } from 'react-icons/bs';
-import { fetchImageStats } from '@/utils';
-import { useDispatch, useSelector } from 'react-redux';
-import { setDataQuery } from '@/redux/statsSplice';
 
 
-const MoreInfo = ({isOpen, image, closeModal,}) => {
-    const [loading, setLoading] = useState(false);
-    const [stats, setStats] = useState(null)
+const MoreInfo = ({isOpen, image, closeModal, stats}) => {
     const {urls, links, user, id, color, likes, description, created_at, updated_at, width, height} = image;
-    // const statsData = useSelector((state) => state.stats.data);
-    
 
-    const handleMoreInfo = async () => {
-      setLoading(true)
-      const imageStats = await fetchImageStats(id);
-      if(imageStats){
-        setStats(imageStats);
-      } else {
-        toast.error("Error fetching image stats")
-      }
-      setLoading(false)
-      console.log(stats)
-    };
-    
-    useEffect(() => {
-      handleMoreInfo();
-    }, [id]);
 
     const truncateDate = () => {
       if(created_at){
@@ -135,22 +112,22 @@ const MoreInfo = ({isOpen, image, closeModal,}) => {
             <div className="flex gap-7 items-center px-6 md:px-12 mb-4">
               <div className='w-[140px] h-[180px] rounded-md animate-pulse bg-gray-300'></div>
               <div className="flex flex-col gap-3">
-                <div className="w-56 h-6 rounded-md animate-pulse bg-gray-300"></div>
-                <div className="w-64 h-6 rounded-md animate-pulse bg-gray-300"></div>
+                <div className="w-28 md:w-56 h-6 rounded-md animate-pulse bg-gray-300"></div>
+                <div className="w-32 md:w-64 h-6 rounded-md animate-pulse bg-gray-300"></div>
               </div>
             </div>
 
             <div className='w-full flex flex-col items-center justify-center md:items-start md:justify-start gap-3 p-6 md:p-12 rounded-xl bg-white'>
-              <div className="w-full flex flex-col md:flex-row items-center justify-between">
-                <div className="w-22 h-10 md:w-32 w-22 md:h-20 rounded-md animate-pulse bg-gray-300"></div>
-                <div className="w-22 h-10 md:w-32 w-22 md:h-20 rounded-md animate-pulse bg-gray-300"></div>
-                <div className="w-22 h-10 md:w-32 w-22 md:h-20 rounded-md animate-pulse bg-gray-300"></div>
+              <div className="w-full flex flex-col md:flex-row items-center justify-between gap-3 md:gap-0">
+                <div className="w-36 h-9 md:w-32 md:h-20 rounded-md animate-pulse bg-gray-300"></div>
+                <div className="w-36 h-9 md:w-32 md:h-20 rounded-md animate-pulse bg-gray-300"></div>
+                <div className="w-36 h-9 md:w-32 md:h-20 rounded-md animate-pulse bg-gray-300"></div>
               </div>
 
               <div className="w-full hidden md:flex items-center justify-between">
-                <div className="w-22 h-10 md:w-32 w-22 md:h-20 rounded-md animate-pulse bg-gray-300"></div>
-                <div className="w-22 h-10 md:w-32 w-22 md:h-20 rounded-md animate-pulse bg-gray-300"></div>
-                <div className="w-22 h-10 md:w-32 w-22 md:h-20 rounded-md animate-pulse bg-gray-300"></div>
+                <div className="w-32 h-20 rounded-md animate-pulse bg-gray-300"></div>
+                <div className="w-32 h-20 rounded-md animate-pulse bg-gray-300"></div>
+                <div className="w-32 h-20 rounded-md animate-pulse bg-gray-300"></div>
               </div>
             </div>
               </>

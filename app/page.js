@@ -48,9 +48,17 @@ export default function Home() {
 
   const handleShowMore = () => {
     setPagination((prevPage) => prevPage + 1);
+      window.scroll({
+    top: 100,
+    behavior: "smooth"
+    })
   };
   const handleShowLess = () => {
     setPagination((prevPage) => prevPage - 1);
+      window.scroll({
+    top: 100,
+    behavior: "smooth"
+    })
   };
  
 

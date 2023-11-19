@@ -30,7 +30,6 @@ export const fetchImageStats = async (id) => {
     return data;
   } catch (error) {
     console.error('Error fetching image stats:', error);
-    toast.error('Failed to fetch image stats')
   }
 };
 
