@@ -153,12 +153,6 @@ await controls.start({ x: 0, opacity: 1 });
                 </button>
             </form>
             <p className={`text-gray-700 text-center font-normal text-lg mx-3 z-10 ${filled ? 'block' : 'hidden'}`}>Input field cannot be empty.</p>
-            <div className="flex items-center gap-5">
-                <button className='px-4 py-3 text-lg text-white font-medium bg-black rounded-full'>Nature</button>
-                <button className='px-4 py-3 text-lg text-white font-medium bg-black rounded-full'>Nature</button>
-                <button className='px-4 py-3 text-lg text-white font-medium bg-black rounded-full'>Space</button>
-                <button className='px-4 py-3 text-lg text-white font-medium bg-black rounded-full'>Animals</button>
-            </div>
         </div>
     </section>
   )

@@ -85,19 +85,19 @@ const MoreInfo = ({isOpen, image, closeModal,}) => {
   const truncatedLikes = truncateLikes();
     return (
        <div className={`w-[100vw] h-[100vh] fixed top-0 left-0 bg-black/25 ${isOpen ? 'flex' : 'hidden'} justify-center items-center `}>
-          <div className="relative w-full max-w-[23rem] md:max-w-xl bg-black pt-12 pb-0 rounded-xl overflow-hidden">
+          <div className="relative w-full max-w-[21rem] md:max-w-xl bg-black pt-12 pb-0 rounded-xl overflow-hidden">
             {stats != null ? (
               <>
               <button className='absolute top-3 right-3' onClick={closeModal}><BsX className='w-8 h-8 text-white'/></button>
             <div className="flex gap-7 items-center px-6 md:px-12">
               <Image src={urls.full} width={100} height={120} className='object-contain rounded-md' />
               <div className="flex flex-col gap-2">
-                <h1 className='font-medium text-white text-3xl capitalize'>Photo details</h1>
+                <h1 className='font-medium text-white text-2xl md:text-3xl capitalize'>Photo details</h1>
                 <p className='text-[15px] text-gray-300'>Uploaded on: {truncatedDate}</p>
               </div>
             </div>
 
-            <div className="flex gap-12 items-center mt-4 px-6 md:px-12">
+            <div className="flex gap-8 md:gap-12 items-center mt-4 px-6 md:px-12">
               <div className="flex flex-col gap-2">
                 <p className='text-gray-300 text-[15px]'>Views</p>
                 <h1 className='text-white font-medium text-xl md:text-2xl'>{truncatedViews}</h1>
