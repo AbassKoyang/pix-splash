@@ -11,12 +11,25 @@ const router = useRouter();
 const {data:session} = useSession();
 const [navbar, setNavbar] = useState(false);
 
-if (window.scrollY > 100) {
-    setNavbar(false);
-}
+useEffect(() => {
+  function handleNavbar() {
+    if (window.scrollY > 100) {
+      setNavbar(true)
+    } else {
+      setNavbar(false)
+    }
+  };
+
+  window.addEventListener('scroll', handleNavbar);
+  handleNavbar();
+  return () => {
+    window.removeEventListener('scroll', handleNavbar);
+  }
+}, []);
+
 if (!session) {
   router.push('/')
-}
+};
 
   return (
     <main className='min-h-screen w-screen overflow-x-hidden'>
