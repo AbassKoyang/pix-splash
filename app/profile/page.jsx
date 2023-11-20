@@ -27,9 +27,9 @@ useEffect(() => {
   }
 }, []);
 
-if (!session) {
-  router.push('/')
-};
+// if (!session) {
+//   router.push('/')
+// };
 
   return (
     <main className='min-h-screen w-screen overflow-x-hidden'>
