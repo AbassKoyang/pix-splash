@@ -88,7 +88,7 @@ await controls.start({ x: 0, opacity: 1 });
                     className="w-[90vw] md:max-w-md fixed flex flex-col gap-3 items-start justify-center top-28 right-4 bg-white shadow-lg p-6 rounded-md z-30"
                 >
                     <div className="w-full flex flex-col items-center justify-center gap-2">
-                        <Image src={session.user.image} width={90} height={90} alt='Profile Image' className='object-contain rounded-full'/>
+                        <Link href='/profile'><Image src={session.user.image} width={90} height={90} alt='Profile Image' className='object-contain rounded-full'/></Link>
                         <p className='font-medium text-black text-lg'>{session.user.name}</p>
                     </div>
                     <Link href='/' className='text-gray-700 font-normal text-sm'>Favourites</Link>

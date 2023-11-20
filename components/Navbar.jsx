@@ -11,7 +11,7 @@ import { setSearchQuery } from '@/redux/searchSplice';
 import {motion, useAnimation } from 'framer-motion';
 import { useSession, signIn, signOut, getProviders, SessionProvider } from "next-auth/react";
 
-const Navbar = ({otherStyles, onSearch }) => {
+const Navbar = ({otherStyles, onSearch, isSearchAllowed }) => {
 
 const { data: session } = useSession() ;
 const [provider, setProvider] = useState(null)
@@ -70,7 +70,7 @@ await controls.start({ x: 0, opacity: 1 });
                 PS
             </Link>
 
-            <div className="w-full max-w-[15rem] md:max-w-4xl flex justify-between items-center p-2 pl-3 lg:p-3 bg-gray-200 lg:bg-gray-300 rounded-full">
+            <div className={`w-full max-w-[15rem] md:max-w-4xl ${isSearchAllowed ? 'flex' : 'hidden'} justify-between items-center p-2 pl-3 lg:p-3 bg-gray-200 lg:bg-gray-300 rounded-full`}>
                 <BsImages className='w-5 h-5 hidden md:block'/>
                 <input type="text" placeholder="Search for photos..." required className="w-[70%] h-full outline-none border-none stroke-none text-gray-700 text-sm md:text-lg bg-transparent" value={query} onKeyDown={handlePress} onChange={(e) => {handleQueryChange(e)}}/>
                 <button onClick={handleSearch}><BiSearch className='w-6 h-6 px-1 py-1 rounded-full bg-black text-white'/></button>
@@ -92,7 +92,7 @@ await controls.start({ x: 0, opacity: 1 });
                         className="w-[90vw] md:max-w-md fixed flex flex-col gap-3 items-start justify-center top-24 right-2 md:right-4 bg-white shadow-lg p-6 rounded-md"
                     >
                         <div className="w-full flex flex-col items-center justify-center gap-2">
-                            <Image src={session.user.image} width={90} height={90} alt='Profile Image' className='object-contain rounded-full'/>
+                        <Link href='/profile'><Image src={session.user.image} width={90} height={90} alt='Profile Image' className='object-contain rounded-full'/></Link>
                             <p className='font-medium text-black text-lg'>{session.user.name}</p>
                         </div>
                         <Link href='/' className='text-gray-700 font-normal text-sm'>Favourites</Link>

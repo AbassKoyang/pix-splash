@@ -47,18 +47,18 @@ export default function Home() {
   };
 
   const handleShowMore = () => {
-    setPagination((prevPage) => prevPage + 1);
       window.scroll({
     top: 100,
     behavior: "smooth"
     })
+    setPagination((prevPage) => prevPage + 1);
   };
   const handleShowLess = () => {
-    setPagination((prevPage) => prevPage - 1);
       window.scroll({
     top: 100,
     behavior: "smooth"
     })
+    setPagination((prevPage) => prevPage - 1);
   };
  
 
@@ -80,7 +80,7 @@ export default function Home() {
   
   return (
     <main className="min-h-screen bg-white overflow-x-hidden">
-      <Navbar onSearch={handleSearch} otherStyles={`${navbar ? 'fixed top-0 flex' : 'hidden'}`} />
+      <Navbar onSearch={handleSearch} isSearchAllowed={true} otherStyles={`${navbar ? 'fixed top-0 flex' : 'hidden'}`} />
       <Hero onSearch={handleSearch} />
       <div className="grid grid-cols-4 mt-0 gap-8 bg-white p-3">
       <div className="bg-white col-span-4  columns-2 md:columns-3 lg:columns-4 pt-4">
