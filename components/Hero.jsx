@@ -133,12 +133,11 @@ await controls.start({ x: 0, opacity: 1 });
         <div className="w-full mt-32 flex flex-col justify-center items-center z-10">
             <h1 className='max-w-4xl text-white text-center text-4xl lg:text-5xl font-extrabold mb-5 z-10'>The best free stock photos, royalty free images from Unsplash!</h1>
             <form className="w-full max-w-[18rem] md:max-w-xl flex justify-between items-center px-3 py-3 bg-white rounded-full z-10">
-                <BsImages className='w-5 h-5'/>
                 <input 
                     name='search' 
                     type="text"
                     placeholder="Search for photos..." 
-                    className="w-[70%] h-full outline-none border-none stroke-none text-gray-700 bg-white" 
+                    className="w-[90%] h-full outline-none border-none stroke-none text-gray-700 bg-white" 
                     value={query}
                     onKeyDown={handlePress}
                     onChange={(e) => {handleQueryChange(e)}}

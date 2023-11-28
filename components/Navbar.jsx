@@ -61,21 +61,20 @@ await controls.start({ x: 0, opacity: 1 });
 
 
   return (
-    <nav className={`w-full justify-between items-center px-3 py-4 lg:px-8 lg:py-5 ${otherStyles} bg-white z-20`}>
-        <div className="w-full max-w-[90%] md:justify-between md:max-w-[80%] lg:max-w-[80%] flex items-center gap-5 lg:gap-14">
+    <nav className={`w-full justify-between items-center px-3 py-3 lg:px-8 lg:py-3 ${otherStyles} bg-white z-20 shadow-lg`}>
+        <div className="flex items-center">
             <Link href='/' className="text-2xl font-bold text-black hidden lg:block">
                 PixSplash
             </Link>
             <Link href='/' className="text-2xl font-bold text-black block lg:hidden">
                 PS
             </Link>
+        </div>
 
-            <div className={`w-full max-w-[15rem] md:max-w-4xl ${isSearchAllowed ? 'flex' : 'hidden'} justify-between items-center p-2 pl-3 lg:p-3 bg-gray-200 lg:bg-gray-300 rounded-full`}>
-                <BsImages className='w-5 h-5 hidden md:block'/>
-                <input type="text" placeholder="Search for photos..." required className="w-[70%] h-full outline-none border-none stroke-none text-gray-700 text-sm md:text-lg bg-transparent" value={query} onKeyDown={handlePress} onChange={(e) => {handleQueryChange(e)}}/>
+            <div className={`w-full max-w-[15rem] md:max-w-4xl ${isSearchAllowed ? 'flex' : 'hidden'} justify-between items-center p-2 pl-3 lg:px-3 lg:py-3 bg-gray-200 lg:bg-gray-300 rounded-full`}>
+                <input type="text" placeholder="Search for photos..." required className="w-[90%] h-full outline-none border-none stroke-none text-gray-700 text-sm md:text-[16px] bg-transparent" value={query} onKeyDown={handlePress} onChange={(e) => {handleQueryChange(e)}}/>
                 <button onClick={handleSearch}><BiSearch className='w-6 h-6 px-1 py-1 rounded-full bg-black text-white'/></button>
             </div>
-        </div>
 
 
         {session?.user ? (
@@ -151,7 +150,7 @@ await controls.start({ x: 0, opacity: 1 });
                             type="button"
                             key={providerTwo.name}
                             onClick={() => signIn(providerTwo.id)}
-                            className='px-4 py-3 rounded-md bg-black text-white text-lg font-normal hidden lg:block'
+                            className='px-4 py-2 rounded-full bg-black text-white text-lg font-normal hidden lg:block'
                             >
                             Sign In
                             </button>

@@ -33,7 +33,7 @@ useEffect(() => {
 
   return (
     <main className='min-h-screen w-screen overflow-x-hidden'>
-    <Navbar isSearchAllowed={false} otherStyles={`${navbar ? 'fixed top-0' : 'static flex'}`} />
+    <Navbar isSearchAllowed={true} otherStyles={`${navbar ? 'fixed top-0' : 'static flex'}`} />
     <ProfileInfo />
     </main>
   )

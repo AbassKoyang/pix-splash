@@ -10,13 +10,15 @@ import { fetchImages } from '@/utils';
 import Sidebar from '@/components/Sidebar';
 import ShowMore from '@/components/ShowMore';
 import { useSelector } from 'react-redux';
+import { useRouter } from 'next/navigation';
 
 export default function Home() {
   const [images, setImages] = useState([]);
   const [navbar, setNavbar] = useState(false);
   const [loading, setLoading] = useState(false);
   const [pagination, setPagination] = useState(1);
-  const searchQuery = useSelector((state) => state.search.query)
+  const searchQuery = useSelector((state) => state.search.query);
+  const router = useRouter();
 
 
   const fetchInitialImages = async () => {
@@ -40,6 +42,7 @@ export default function Home() {
     const newImages = await fetchImages(searchQuery, pagination);
     if(newImages.length > 0){
       setImages(newImages);
+      router.push('/')
     } else {
       toast.error("Oops! No result.")
     }
