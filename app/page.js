@@ -11,21 +11,24 @@ import Sidebar from '@/components/Sidebar';
 import ShowMore from '@/components/ShowMore';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/navigation';
+import { useDispatch } from 'react-redux';
+import { setImages } from '@/redux/imageSplice';
 
 export default function Home() {
-  const [images, setImages] = useState([]);
   const [navbar, setNavbar] = useState(false);
   const [loading, setLoading] = useState(false);
   const [pagination, setPagination] = useState(1);
+  const dispatch = useDispatch();
   const searchQuery = useSelector((state) => state.search.query);
   const router = useRouter();
+  const images = useSelector((state) => state.imagelist.imagesarray);
 
 
   const fetchInitialImages = async () => {
     setLoading(true)
     const newImages = await fetchImages(searchQuery, pagination);
     if(newImages.length > 0){
-      setImages(newImages);
+      dispatch(setImages(newImages));
     } else {
       toast.error("Oops! No result.")
     }
@@ -41,8 +44,7 @@ export default function Home() {
     setLoading(true)
     const newImages = await fetchImages(searchQuery, pagination);
     if(newImages.length > 0){
-      setImages(newImages);
-      router.push('/')
+      dispatch(setImages(newImages));
     } else {
       toast.error("Oops! No result.")
     }
@@ -80,15 +82,14 @@ export default function Home() {
       window.removeEventListener('scroll', handleNavbar);
     }
   }, [])
-  
   return (
     <main className="min-h-screen bg-white overflow-x-hidden">
       <Navbar onSearch={handleSearch} isSearchAllowed={true} otherStyles={`${navbar ? 'fixed top-0 flex' : 'hidden'}`} />
       <Hero onSearch={handleSearch} />
       <div className="grid grid-cols-4 mt-0 gap-8 bg-white p-3">
-      <div className="bg-white col-span-4  columns-2 md:columns-3 lg:columns-4 pt-4">
+      <div className="bg-white col-span-4  columns-2 md:columns-3 lg:columns-5 pt-4 lg:px-6">
       {images.map((image) => (
-        <Feed image={image} dataLoaded={loading} />
+        <Feed image={image} dataLoaded={loading} key={image.id} />
       ))}
       </div>
       </div>

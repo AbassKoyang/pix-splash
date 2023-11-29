@@ -61,7 +61,7 @@ await controls.start({ x: 0, opacity: 1 });
 
 
   return (
-    <nav className={`w-full justify-between items-center px-3 py-3 lg:px-8 lg:py-3 ${otherStyles} bg-white z-20 shadow-lg`}>
+    <nav className={`w-full justify-between items-center px-3 py-3 lg:px-8 lg:py-3 ${otherStyles} bg-white z-20 shadow-md`}>
         <div className="flex items-center">
             <Link href='/' className="text-2xl font-bold text-black hidden lg:block">
                 PixSplash

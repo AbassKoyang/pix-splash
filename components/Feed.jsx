@@ -90,7 +90,7 @@ const Feed = ({ image, dataLoaded }) => {
     
       return (<>
             {!dataLoaded ? (
-              <section className="mb-4 px-10 rounded-xl overflow-hidden relative group transition-all duration-300 cursor-pointer" onClick={() => {setIsOpen(true)}}>
+              <section className="mb-4 rounded-xl overflow-hidden relative group transition-all duration-300 cursor-pointer" onClick={() => {setIsOpen(true)}}>
               <>
               <button className="absolute z-10 top-5 right-4 p-2 rounded-full bg-[#e9e9e9] hover:bg-white transition-all duration-300 cursor-pointer" onClick={(event) => {
                 event.stopPropagation();
