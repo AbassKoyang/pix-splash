@@ -53,8 +53,8 @@ useEffect(() => {
 // };
 
   return (
-    <main className='min-h-screen w-screen overflow-x-hidden'>
-    <Navbar isSearchAllowed={true} otherStyles={`${navbar ? 'fixed top-0' : 'static flex'}`} onSearch={handleSearch}/>
+    <main className='min-h-screen overflow-x-hidden'>
+    <Navbar isSearchAllowed={true} otherStyles={`${navbar ? 'static' : 'static'}`} onSearch={handleSearch}/>
     <ProfileInfo />
     <Favourites/>
     </main>
