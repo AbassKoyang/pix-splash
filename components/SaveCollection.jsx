@@ -2,7 +2,7 @@ import React from 'react';
 import { BsX } from 'react-icons/bs';
 import { useState } from 'react';
 
-const SaveCollection = ({isOpen}) => {
+const SaveCollection = ({isOpen, createCollection, setCollectionModal}) => {
 const [isCreateCollectionOpen, setIsCreateCollectionOpen] = useState(false);
 
   return (
@@ -10,7 +10,7 @@ const [isCreateCollectionOpen, setIsCreateCollectionOpen] = useState(false);
           <div className={`relative w-full max-w-[22rem] md:max-w-2xl bg-white rounded-lg px-6 py-8 md:p-16 flex justify-center items-center`}>
           <button 
           className='absolute top-2 right-2 p-2 bg-transparent rounded-full outline-none border-none stroke-none hidden lg:block'
-          onClick={()=> setCollectionModal(false)}
+          onClick={setCollectionModal}
           ><BsX className='w-6 h-6'/>
           </button>
           <div className={`w-full h-full ${!isCreateCollectionOpen? 'flex' : 'hidden'} flex-col justify-center items-start`}>
@@ -36,7 +36,9 @@ const [isCreateCollectionOpen, setIsCreateCollectionOpen] = useState(false);
               className='px-4 py-2 text-[15px] md:text-lg border-[0.5px] border-black rounded-full bg-transparent hover:bg-black hover:text-white font-medium transition-all duration-300'>
                 Create a new collection
               </button>
-              <button className='px-4 py-2 text-[15px] md:text-lg md:px-5 md:py-3 rounded-full bg-black text-white font-medium'>
+              <button className='px-4 py-2 text-[15px] md:text-lg md:px-5 md:py-3 rounded-full bg-black text-white font-medium'
+               onClick={createCollection}
+              >
                 Done
               </button>
               </div>

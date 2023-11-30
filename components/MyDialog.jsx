@@ -71,8 +71,9 @@ const MyDialog = ({isOpen, closeModal, images}) => {
       const response = await fetch('/api/collections/new', {
         method: "POST",
         body: JSON.stringify({
-          title: "uduud",
-          content: images,
+          title: "Test collection",
+          collectionDescription: "Test collection description.",
+          content: [{urls, links, user, id, color, likes, description, created_at, updated_at, width, height}],
           userId: session?.user.id,
         })
       })
@@ -242,7 +243,7 @@ const MyDialog = ({isOpen, closeModal, images}) => {
           </Dialog.Panel>
         </Transition.Child>
         </div>
-        <SaveCollection isOpen={collectionModal}/>
+        <SaveCollection isOpen={collectionModal} createCollection={createCollection} setCollectionModal={() => setCollectionModal(false)}/>
         <MoreInfo isOpen={moreInfoModal} image={images} stats={stats} closeModal={()=> setMoreInfoModal(false)} />
         </div>
       </Dialog>

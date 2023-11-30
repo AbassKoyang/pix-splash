@@ -42,7 +42,7 @@ const Feed = ({ image, dataLoaded }) => {
               likes: likes,
               description: description,
               user: user,
-              current_user_collections: current_user_collections,
+              current_user_collections: [current_user_collections],
               urls:  urls,
               links: links,
             }),

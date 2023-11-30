@@ -46,7 +46,8 @@ export default function Home() {
     if(newImages.length > 0){
       dispatch(setImages(newImages));
     } else {
-      toast.error("Oops! No result.")
+      dispatch(setImages([]));
+      toast.error("Oops! No result.");
     }
     setLoading(false)
   };

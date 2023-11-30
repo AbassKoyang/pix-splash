@@ -11,11 +11,6 @@ const ProfileInfo = () => {
         </div>
         <h1 className='text-xl md:text-2xl font-medium text-black mt-4'>{session?.user.name}</h1>
         <h1 className='text-sm md:text-sm font-normal text-black mt-0'>{session?.user.email}</h1>
-
-        <div className="w-full flex items-center justify-center gap-3 py-4 mt-5 border-b border-gray-300">
-          <button className="bg-black text-white px-4 py-2">Saved</button>
-          <button className="bg-black text-white px-4 py-2">Favourites</button>
-        </div>
     </section>
   )
 }

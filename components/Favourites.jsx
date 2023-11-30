@@ -2,7 +2,7 @@ import React from 'react'
 import { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import { BiDownload, BiHeart } from 'react-icons/bi';
-import SkeletonLoader from './skeleton';
+import Link from 'next/link';
 import {toast} from 'react-hot-toast';
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 const Favourites = () => {
@@ -21,64 +21,28 @@ useEffect(() => {
     if(session?.user.id){
       fetchFavourites();
     }
-}, [])
+}, [favouritePosts])
 
-const addToFavourites = async () => {
-  const {
-    id,
-    created_at,
-    updated_at,
-    width,
-    height,
-    color,
-    likes,
-    description,
-    user,
-    current_user_collections,
-    urls,
-    links,
-  } = favouritePosts;
-  setIsSubmitting(true);
-  if(session){
-    try {
-      const response = await fetch("/api/favourites/new", {
-        method: "POST",
-        body: JSON.stringify({
-          userId: session?.user.id,
-          id: id,
-          created_at: created_at,
-          updated_at: updated_at,
-          width: width,
-          height: height,
-          color: color,
-          likes: likes,
-          description: description,
-          user: user,
-          current_user_collections: current_user_collections,
-          urls:  urls,
-          links: links,
-        }),
-      });
+const deleteFromFavourites = async (favouritePost) => {
+  const hasConfirmed = confirm("Are you sure you want to remove this image from favourites?");
+ if(hasConfirmed){
+  try {
+    await fetch(`api/favourites/${favouritePost._id.toString()}`,{
+      method: 'DELETE'
+    });
 
-      if (response.status === 201) {
-        toast.success("Image added to favourite");  
-        } else {
-          toast.error('Failed to add image to favourites');
-        };
+    const filteredFavourites = favouritePosts.filter((fP) => fP._id !== favouritePost._id);
+    setFavouritePosts(filteredFavourites);
+    toast.success('Image removed successfully!');
+  } catch (error) {
+    toast.error('Failed to delete image from favourites.')
+    console.log(error)
+  };
+ };
+};
 
-    } catch (error) {
-      console.log(error);
-      throw new Error(error);
-    } finally{
-      setIsSubmitting(false);
-    }
-  } else {
-    toast('Please sign in to add image to favourites', {style: {backgroundColor: 'black', color: 'white'}, duration: 1500})
-  } 
-  setIsSubmitting(false)
-}
 
-async function handleDownloadImage(imageUrl, suggestedFileName) {
+ const handleDownloadImage = async (imageUrl, suggestedFileName) => {
   try {
     const response = await fetch(imageUrl);
     if (!response.ok) {
@@ -93,7 +57,6 @@ async function handleDownloadImage(imageUrl, suggestedFileName) {
     a.click();
     window.URL.revokeObjectURL(url);
     toast.success("Your download has started.")
-    console.log(image)
   } catch (error) {
     console.error('Download failed:', error);
     toast.error("Failed to download image");
@@ -101,13 +64,18 @@ async function handleDownloadImage(imageUrl, suggestedFileName) {
 };
     
   return (
+    <>
+    <div className="w-full flex items-center justify-center gap-3 py-4 px-6 lg:px-14 mt-5 border-b border-gray-300">
+          <button className="bg-black text-white px-4 py-2 rounded-full">Favourites</button>
+          <Link href='/profile/collections' className="bg-[#f8f7f4] text-black px-4 py-2 rounded-full">Collections</Link>
+    </div>
     <section className="bg-white col-span-4 columns-1 md:columns-3 lg:columns-3 pt-4 px-6 lg:px-14 overflow-x-hidden">
         {
             favouritePosts.map((favouritePost) => (
               <div className="w-full flex flex-col items-center px-3 mb-4 relative">
                   <div className="w-full h-[250px] mb-4 rounded-lg overflow-hidden object-fit group transition-all duration-300">
                     <img src={favouritePost.urls.small} alt={favouritePost.description} className='w-full h-full' />
-                    <button className="hidden  md:group-hover:block  absolute z-10 top-4 right-8 p-2 rounded-full bg-[#e9e9e9] hover:bg-white transition-all duration-300 cursor-pointer" onClick={(event) => {
+                    <button className="absolute z-10 top-4 right-8 p-2 rounded-full bg-[#e9e9e9] hover:bg-white transition-all duration-300 cursor-pointer" onClick={(event) => {
                     event.stopPropagation();
                     handleDownloadImage(favouritePost.urls.full, favouritePost.description);}}>
                     <BiDownload className="w-4 h-4" />
@@ -122,7 +90,7 @@ async function handleDownloadImage(imageUrl, suggestedFileName) {
                   </div>
                   <button className="bg-black rounded-full p-2 cursor-pointer" onClick={(event) => {
                       event.stopPropagation();
-                      addToFavourites();
+                      deleteFromFavourites(favouritePost);
                     }}>{isSubmitting ? (<AiOutlineLoading3Quarters className="w-3 h-3 animate-spin text-white"/>) : (<BiHeart className="w-3 h-3 text-white" />)}
                   </button>
                 </div>
@@ -130,6 +98,7 @@ async function handleDownloadImage(imageUrl, suggestedFileName) {
             ))
         }
     </section>
+    </>
   )
 }
 
