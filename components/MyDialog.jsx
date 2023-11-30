@@ -26,6 +26,8 @@ const MyDialog = ({isOpen, closeModal, images}) => {
   const [submitting, setIsSubmitting] = useState(false);
   const [collectionModal, setCollectionModal] = useState(false);
   const [stats, setStats] = useState(null)
+  const [isFetchingCollections, setIsFetchingCollections] = useState(false);
+  const [collections, setCollections] = useState([]);
   
 
     // State to toggle animation
@@ -89,7 +91,32 @@ const MyDialog = ({isOpen, closeModal, images}) => {
     }finally{
       setIsSubmitting(false)
     }
-  }
+  };
+
+
+  const handleCollectionModal = () => {
+    if(session){
+      setCollectionModal(false)
+    } else {
+      toast.error('You must be logged in to create collections.', {
+        icon: '⛔'
+      })
+    }
+  };
+
+  const fetchCollections = async () => {
+    setIsFetchingCollections(true)
+    try {
+      await connectToDB();
+      const response = await fetch(`api/users/${session?.user.id}/collections`);
+      const collections = response.json();
+      setCollections(collections);
+    } catch (error) {
+      console.log(error);
+    }finally{
+      setIsFetchingCollections(false)
+    }
+  };
 
   
   const handleMoreInfo = async () => {
@@ -163,7 +190,7 @@ const MyDialog = ({isOpen, closeModal, images}) => {
 
                 <button 
                 className="block md:flex px-3 py-0 md:px-3 md:py-1 rounded-full md:rounded-none bg-transparent border border-gray-300 hover:border-black transition-all duration-300 md:gap-2 md:items-center"
-                onClick={()=> setCollectionModal(true)}>
+                onClick={()=> {setCollectionModal(true), fetchCollections()}}>
                   <BiBookmark className='w-4 h-4 md:w-5 md:h-5 leading-[0px] m-0 p-0'/>
                   <p className='hidden md:block text-lg text-gray-900 font-medium'>Save</p>
                 </button>
@@ -243,7 +270,7 @@ const MyDialog = ({isOpen, closeModal, images}) => {
           </Dialog.Panel>
         </Transition.Child>
         </div>
-        <SaveCollection isOpen={collectionModal} createCollection={createCollection} setCollectionModal={() => setCollectionModal(false)}/>
+        <SaveCollection isOpen={collectionModal} createCollection={createCollection} setCollectionModal={handleCollectionModal} collections={collections}/>
         <MoreInfo isOpen={moreInfoModal} image={images} stats={stats} closeModal={()=> setMoreInfoModal(false)} />
         </div>
       </Dialog>

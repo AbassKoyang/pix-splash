@@ -1,9 +1,13 @@
 import React from 'react';
 import { BsX } from 'react-icons/bs';
 import { useState } from 'react';
+import Image from 'next/image';
 
-const SaveCollection = ({isOpen, createCollection, setCollectionModal}) => {
+const SaveCollection = ({isOpen, createCollection, setCollectionModal, collections}) => {
 const [isCreateCollectionOpen, setIsCreateCollectionOpen] = useState(false);
+const [isSubmitting, setIsSubmitting] = useState(false);
+
+
 
   return (
     <div className={`fixed w-[100vw] h-[100vh] top-0 left-0 bg-black/25 z-70 ${isOpen? 'flex' : 'hidden'} justify-center items-center overflow-hidden`}>
@@ -17,18 +21,17 @@ const [isCreateCollectionOpen, setIsCreateCollectionOpen] = useState(false);
             <h1 className='text-xl text-gray-800 font-medium mb-5'>Add this Shot to a collection</h1>
             <input type="text" placeholder='filter collections' className='w-full p-4 rounded-lg text-gray-600 bg-white border border-black mb-4 md:mb-2' />
             <div className="w-full h-[280px] flex flex-col gap-2 overflow-y-scroll">
-              <div className="p-5 md:p-8 w-full rounded-md border border-gray-700">
-                <p>nkjnuhydsy</p>
-              </div>
-              <div className="p-5 md:p-8 w-full rounded-md border border-gray-700">
-                <p>nkjnuhydsy</p>
-              </div>
-              <div className="p-5 md:p-8 w-full rounded-md border border-gray-700">
-                <p>nkjnuhydsy</p>
-              </div>
-              <div className="p-5 md:p-8 w-full rounded-md border border-gray-700">
-                <p>nkjnuhydsy</p>
-              </div>
+              {
+                isOpen && collections.map((collection) =>{
+                  const {id, title, collectionDescription, content, createdAt} = collection;
+                  return (
+                    <div key={id} className='p-5 md:p-8 w-full flex justify-between rounded-md border border-gray-700'>
+                      <Image src={content.urls.small} width={100} height={100} />
+                      <p>{title}</p>
+                    </div>
+                    )
+                  })
+              }
             </div>
             <div className="w-full flex justify-between items-center mt-5">
               <button
