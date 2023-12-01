@@ -22,12 +22,13 @@ const [isSubmitting, setIsSubmitting] = useState(false);
             <input type="text" placeholder='filter collections' className='w-full p-4 rounded-lg text-gray-600 bg-white border border-black mb-4 md:mb-2' />
             <div className="w-full h-[280px] flex flex-col gap-2 overflow-y-scroll">
               {
-                isOpen && collections.map((collection) =>{
+                collections.map((collection) =>{
                   const {id, title, collectionDescription, content, createdAt} = collection;
-                  return (
-                    <div key={id} className='p-5 md:p-8 w-full flex justify-between rounded-md border border-gray-700'>
-                      <Image src={content.urls.small} width={100} height={100} />
-                      <p>{title}</p>
+                  const {urls, links, user, color, likes, description, created_at, updated_at, width, height} = content[0];
+                   return (
+                    <div key={id} className='p-2 md:p-3 w-full flex gap-2 items-center rounded-md border border-gray-700'>
+                    <Image src={urls.small} width={60} height={60} className='rounded-md'/>                      
+                    <p>{title}</p>
                     </div>
                     )
                   })
@@ -36,10 +37,10 @@ const [isSubmitting, setIsSubmitting] = useState(false);
             <div className="w-full flex justify-between items-center mt-5">
               <button
               onClick={()=> setIsCreateCollectionOpen(true)}
-              className='px-4 py-2 text-[15px] md:text-lg border-[0.5px] border-black rounded-full bg-transparent hover:bg-black hover:text-white font-medium transition-all duration-300'>
+              className='px-3 py-2 text-[13px] md:text-[16px] border-[0.5px] border-black rounded-full bg-transparent hover:bg-black hover:text-white font-medium transition-all duration-300'>
                 Create a new collection
               </button>
-              <button className='px-4 py-2 text-[15px] md:text-lg md:px-5 md:py-3 rounded-full bg-black text-white font-medium'
+              <button className='px-3 py-2 text-[13px] md:text-[16px] md:px-4 md:py-2 rounded-full bg-black text-white font-medium'
                onClick={createCollection}
               >
                 Done
@@ -49,7 +50,7 @@ const [isSubmitting, setIsSubmitting] = useState(false);
 
           {/* Create collection section 
           Create collection section 
-          Create collection section  */}
+          Create collection section */}
 
            <div className={`w-full h-full ${isCreateCollectionOpen? 'flex' : 'hidden'} flex-col justify-center`}>
               <h1 className='text-xl font-medium mb-5 pb-3 border-b-[0.5px] border-gray-300 text-gray-800'>Create a new collection</h1>

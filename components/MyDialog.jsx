@@ -3,17 +3,16 @@ import { useSession } from 'next-auth/react';
 import { motion, useAnimation } from 'framer-motion';
 import { useState, Fragment } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
-import { BsArrowLeft, BsBookmarks, BsCheck2, BsFillInfoCircleFill, BsSave, BsX } from 'react-icons/bs';
-import Image from 'next/image';
+import { BsCheck2, BsFillInfoCircleFill, BsSave, BsX } from 'react-icons/bs';
 import Link from 'next/link';
 import { BiArrowBack, BiBookmark, BiChevronDown, BiHeart, } from 'react-icons/bi';
 import { AiFillCheckCircle } from 'react-icons/ai';
-import { RiBookMarkLine, RiShareBoxFill } from 'react-icons/ri';
-import { FaArrowLeft } from 'react-icons/fa';
-import {toast, Toaster} from 'react-hot-toast';
+import { RiShareBoxFill } from 'react-icons/ri';
+import {toast, } from 'react-hot-toast';
 import { fetchImageStats } from '@/utils';
 import MoreInfo from './MoreInfo';
 import SaveCollection from './SaveCollection';
+import { connectToDB } from '@/utils/database';
 
 const MyDialog = ({isOpen, closeModal, images}) => {
 
@@ -73,6 +72,7 @@ const MyDialog = ({isOpen, closeModal, images}) => {
       const response = await fetch('/api/collections/new', {
         method: "POST",
         body: JSON.stringify({
+          authorName: session?.user.name,
           title: "Test collection",
           collectionDescription: "Test collection description.",
           content: [{urls, links, user, id, color, likes, description, created_at, updated_at, width, height}],
@@ -96,7 +96,7 @@ const MyDialog = ({isOpen, closeModal, images}) => {
 
   const handleCollectionModal = () => {
     if(session){
-      setCollectionModal(false)
+      setCollectionModal(true)
     } else {
       toast.error('You must be logged in to create collections.', {
         icon: '⛔'
@@ -107,10 +107,10 @@ const MyDialog = ({isOpen, closeModal, images}) => {
   const fetchCollections = async () => {
     setIsFetchingCollections(true)
     try {
-      await connectToDB();
       const response = await fetch(`api/users/${session?.user.id}/collections`);
-      const collections = response.json();
+      const collections = await  response.json();
       setCollections(collections);
+      console.log(collections);
     } catch (error) {
       console.log(error);
     }finally{
@@ -190,7 +190,7 @@ const MyDialog = ({isOpen, closeModal, images}) => {
 
                 <button 
                 className="block md:flex px-3 py-0 md:px-3 md:py-1 rounded-full md:rounded-none bg-transparent border border-gray-300 hover:border-black transition-all duration-300 md:gap-2 md:items-center"
-                onClick={()=> {setCollectionModal(true), fetchCollections()}}>
+                onClick={()=> {handleCollectionModal(), fetchCollections()}}>
                   <BiBookmark className='w-4 h-4 md:w-5 md:h-5 leading-[0px] m-0 p-0'/>
                   <p className='hidden md:block text-lg text-gray-900 font-medium'>Save</p>
                 </button>
@@ -270,7 +270,7 @@ const MyDialog = ({isOpen, closeModal, images}) => {
           </Dialog.Panel>
         </Transition.Child>
         </div>
-        <SaveCollection isOpen={collectionModal} createCollection={createCollection} setCollectionModal={handleCollectionModal} collections={collections}/>
+        <SaveCollection isOpen={collectionModal} createCollection={createCollection} setCollectionModal={()=> setCollectionModal(false)} collections={collections}/>
         <MoreInfo isOpen={moreInfoModal} image={images} stats={stats} closeModal={()=> setMoreInfoModal(false)} />
         </div>
       </Dialog>

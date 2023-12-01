@@ -2,6 +2,14 @@ import {Schema, SchemaTypes, model, models} from 'mongoose';
 
 
 const CollectionSchema = new Schema({
+  author: {
+    type: Schema.Types.ObjectId,
+    ref: 'User'
+  },
+  authorName: {
+    type: String,
+    required: true,
+  },
   title: {
     type: String,
     required: true,
@@ -62,10 +70,6 @@ const CollectionSchema = new Schema({
       },
     }
   ],
-  author: {
-    type: Schema.Types.ObjectId,
-    ref: 'User'
-  },
   createdAt: {
     type: Date,
     default: Date.now,

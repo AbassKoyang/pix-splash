@@ -6,7 +6,7 @@ export const GET = async (request, {params}) => {
         await connectToDB();
 
         const collections = await Collection.find({
-            creator: params.id
+            author: params.id,
         }).populate('author');
 
         return new Response(JSON.stringify(collections), {status: 200})
