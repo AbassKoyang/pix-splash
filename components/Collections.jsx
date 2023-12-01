@@ -6,7 +6,7 @@ import { useSession } from 'next-auth/react';
 const Collections = () => {
   const [isFetchingCollections, setIsFetchingCollections] = useState(false);
   const [collections, setCollections] = useState([]);
-  const {data:session} = useSession();
+  const {data: session} = useSession();
 
 
   const fetchCollections = async () => {
@@ -37,10 +37,11 @@ const Collections = () => {
         <section className="bg-white col-span-4 columns-1 md:columns-3 lg:columns-3 pt-4 overflow-x-hidden">
         {
                 collections.map((collection) =>{
-                  const {id, title, collectionDescription, content, createdAt} = collections;
+                  const {id, title, collectionDescription, content, createdAt} = collection;
+                    const {urls, links, user, color, likes, description, created_at, updated_at, width, height} = content[0];
                   return (
                     <div key={id} className='p-5 md:p-8 w-full flex justify-between rounded-md border border-gray-700'>
-                      <Image src={content.urls.small} width={100} height={100} />
+                      <Image src={urls.small} width={100} height={100} />
                       <p>{title}</p>
                     </div>
                     )

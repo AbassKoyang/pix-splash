@@ -270,7 +270,7 @@ const MyDialog = ({isOpen, closeModal, images}) => {
           </Dialog.Panel>
         </Transition.Child>
         </div>
-        <SaveCollection isOpen={collectionModal} createCollection={createCollection} setCollectionModal={()=> setCollectionModal(false)} collections={collections}/>
+        <SaveCollection isOpen={collectionModal} createCollection={createCollection} setCollectionModal={()=> setCollectionModal(false)} collections={collections} isFetchingCollections={isFetchingCollections}/>
         <MoreInfo isOpen={moreInfoModal} image={images} stats={stats} closeModal={()=> setMoreInfoModal(false)} />
         </div>
       </Dialog>

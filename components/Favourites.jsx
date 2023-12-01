@@ -9,19 +9,26 @@ const Favourites = () => {
     const {data:session} = useSession();
     const [favouritePosts, setFavouritePosts] = useState([]);
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [isFetchingFavourites, setIsFetchingFavourites] = useState(false)
 
 
 useEffect(() => {
+  if(session?.user.id){
   const fetchFavourites = async () => {
+    setIsFetchingFavourites(true)
+    try {
     const response = await fetch(`/api/users/${session?.user.id}/favourites`);
     const favourites = await response.json();
     setFavouritePosts(favourites);
-  }
-
-    if(session?.user.id){
-      fetchFavourites();
+    } catch (error) {
+      console.log(error)
+    }finally{
+      setIsFetchingFavourites(false)
     }
-}, [favouritePosts])
+  }
+      fetchFavourites();
+  }
+}, [])
 
 const deleteFromFavourites = async (favouritePost) => {
   const hasConfirmed = confirm("Are you sure you want to remove this image from favourites?");
@@ -65,37 +72,43 @@ const deleteFromFavourites = async (favouritePost) => {
     
   return (
     <>
-    <div className="w-full flex items-center justify-center gap-3 py-4 px-6 lg:px-14 mt-5 border-b border-gray-300">
+    <div className="w-full bg-blue-300 flex items-center justify-center gap-3 py-4 px-6 lg:px-14 mt-5 border-b border-gray-300">
           <button className="bg-black text-white px-4 py-2 rounded-full">Favourites</button>
           <Link href='/profile/collections' className="bg-[#f8f7f4] text-black px-4 py-2 rounded-full">Collections</Link>
     </div>
-    <section className="bg-white col-span-4 columns-1 md:columns-3 lg:columns-3 pt-4 px-6 lg:px-14 overflow-x-hidden">
+    <section className={`bg-white ${isFetchingFavourites ? 'flex justify-center items-center overflow-y-hidden' : 'col-span-4 columns-1 md:columns-3 lg:columns-3'} pt-4 px-6 lg:px-14 overflow-x-hidden`}>
         {
-            favouritePosts.map((favouritePost) => (
-              <div className="w-full flex flex-col items-center px-3 mb-4 relative">
-                  <div className="w-full h-[250px] mb-4 rounded-lg overflow-hidden object-fit group transition-all duration-300">
-                    <img src={favouritePost.urls.small} alt={favouritePost.description} className='w-full h-full' />
-                    <button className="absolute z-10 top-4 right-8 p-2 rounded-full bg-[#e9e9e9] hover:bg-white transition-all duration-300 cursor-pointer" onClick={(event) => {
-                    event.stopPropagation();
-                    handleDownloadImage(favouritePost.urls.full, favouritePost.description);}}>
-                    <BiDownload className="w-4 h-4" />
-                  </button>
-                  </div>
-                <div className="w-full flex justify-between items-center">
-                  <div className="flex items-center gap-2">
-                    <div className="w-7 h-7 rounded-full overflow-hidden">
-                      <img className='w-full h-full' src={favouritePost.user.profile_image.small} alt={favouritePost.description} />
-                    </div>
-                    <p className='text-sm font-medium text-black'>{favouritePost.user.name}</p>
-                  </div>
-                  <button className="bg-black rounded-full p-2 cursor-pointer" onClick={(event) => {
-                      event.stopPropagation();
-                      deleteFromFavourites(favouritePost);
-                    }}>{isSubmitting ? (<AiOutlineLoading3Quarters className="w-3 h-3 animate-spin text-white"/>) : (<BiHeart className="w-3 h-3 text-white" />)}
-                  </button>
-                </div>
+            isFetchingFavourites ? (
+              <div className='flex items-center gap-1'>
+                  <p className='text-[15px] text-[#0d0c22] font-semibold'>Loading favourites...</p> <AiOutlineLoading3Quarters className="w-5 h-5 animate-spin"/>
               </div>
-            ))
+            ) : (
+              favouritePosts.map((favouritePost) => (
+                <div className="w-full flex flex-col items-center px-3 mb-4 relative">
+                    <div className="w-full h-[250px] mb-4 rounded-lg overflow-hidden object-fit group transition-all duration-300">
+                      <img src={favouritePost.urls.small} alt={favouritePost.description} className='w-full h-full' />
+                      <button className="absolute z-10 top-4 right-8 p-2 rounded-full bg-[#e9e9e9] hover:bg-white transition-all duration-300 cursor-pointer" onClick={(event) => {
+                      event.stopPropagation();
+                      handleDownloadImage(favouritePost.urls.full, favouritePost.description);}}>
+                      <BiDownload className="w-4 h-4" />
+                    </button>
+                    </div>
+                  <div className="w-full flex justify-between items-center">
+                    <div className="flex items-center gap-2">
+                      <div className="w-7 h-7 rounded-full overflow-hidden">
+                        <img className='w-full h-full' src={favouritePost.user.profile_image.small} alt={favouritePost.description} />
+                      </div>
+                      <p className='text-sm font-medium text-black'>{favouritePost.user.name}</p>
+                    </div>
+                    <button className="bg-black rounded-full p-2 cursor-pointer" onClick={(event) => {
+                        event.stopPropagation();
+                        deleteFromFavourites(favouritePost);
+                      }}>{isSubmitting ? (<AiOutlineLoading3Quarters className="w-3 h-3 animate-spin text-white"/>) : (<BiHeart className="w-3 h-3 text-white" />)}
+                    </button>
+                  </div>
+                </div>
+              ))
+            )
         }
     </section>
     </>
