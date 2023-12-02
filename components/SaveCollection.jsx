@@ -3,12 +3,44 @@ import { BsX } from 'react-icons/bs';
 import { useState } from 'react';
 import Image from 'next/image';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
+import toast from 'react-hot-toast';
+import { useSession } from 'next-auth/react';
 
-const SaveCollection = ({isOpen, createCollection, setCollectionModal, collections, isFetchingCollections}) => {
+const SaveCollection = ({isOpen, setCollectionModal, collections, isFetchingCollections}) => {
 const [isCreateCollectionOpen, setIsCreateCollectionOpen] = useState(false);
 const [isSubmitting, setIsSubmitting] = useState(false);
+const {data:session} = useSession();
+const [collectionTitle, setCollectionTitle] = useState(null);
+const [collectionDesc, setCollectionDesc] = useState(null);
 
+const createCollection = async (e) => {
+  e.preventDefault();
+  setIsSubmitting(true);
 
+  try {
+    const response = await fetch('/api/collections/new', {
+      method: "POST",
+      body: JSON.stringify({
+        authorName: session?.user.name,
+        title: collectionTitle,
+        collectionDescription: collectionDesc,
+        content: [{urls, links, user, id, color, likes, description, created_at, updated_at, width, height}],
+        userId: session?.user.id,
+      })
+    })
+
+    if(response.ok){
+      toast.success('Collection created successfully!')
+    }
+    if(!response.ok){
+      toast.error('Could not create collection.')
+    }
+  } catch (error) {
+    console.log(error);
+  }finally{
+    setIsSubmitting(false)
+  }
+};
 
   return (
     <div className={`fixed w-[100vw] h-[100vh] top-0 left-0 bg-black/25 z-70 ${isOpen? 'flex' : 'hidden'} justify-center items-center overflow-hidden`}>
@@ -30,7 +62,7 @@ const [isSubmitting, setIsSubmitting] = useState(false);
                 
                   collections.map((collection) =>{
                     const {id, title, collectionDescription, content, createdAt} = collection;
-                    const {urls, links, user, color, likes, description, created_at, updated_at, width, height} = content[0];
+                    const {urls, links, user, color, likes, description, created_at, updated_at, width, height} = content[content.length - 1];
                      return (
                       <button key={id} className='p-2 md:p-3 w-full flex gap-3 items-center rounded-md outline-0 border-[1.5px] border-[#e7e7e9] hover:shadow-red-200 hover:shadow-sm focus:shadow-red-200 focus:shadow-sm'>
                       <Image src={urls.small} width={50} height={50} className='rounded-md'/>                      
@@ -50,7 +82,6 @@ const [isSubmitting, setIsSubmitting] = useState(false);
                 Create a new collection
               </button>
               <button className='px-3 py-2 text-[11px] md:text-[13px] md:px-3 md:py-2 rounded-full bg-black text-white font-medium'
-               onClick={createCollection}
               >
                 Done
               </button>
@@ -64,13 +95,35 @@ const [isSubmitting, setIsSubmitting] = useState(false);
            <div className={`w-full h-full ${isCreateCollectionOpen? 'flex' : 'hidden'} flex-col justify-center`}>
               <h1 className='text-lg md:text-xl font-medium mb-5 pb-3 border-b-[0.5px] border-gray-300 text-gray-800'>Create a new collection</h1>
               <label htmlFor="name" className='text-sm md:text-[16px] font-medium text-gray-600'>Name</label>
-              <input name='name' type="text" className='w-full p-5 rounded-lg text-gray-600 bg-white border-[1.5px] border-[#e7e7e9] mb-2 focus:shadow-red-200 focus:shadow-sm' />
+              <input 
+              name='name' 
+              type="text" 
+              className='w-full p-5 rounded-lg text-gray-600 bg-white border-[1.5px] border-[#e7e7e9] mb-2 focus:shadow-red-200 focus:shadow-sm' 
+              onChange={(e) => setCollectionTitle(e.target.value)}
+              />
               <label htmlFor="description" className='mt-3 text-sm md:text-[16px] font-medium text-gray-600'>Description (Optional)</label>
-              <textarea rows='3' name='description' type="text" className='w-full p-5 rounded-lg text-gray-600 border-[1.5px] border-[#e7e7e9] mb-2 focus:shadow-red-200 focus:shadow-sm' />
+              <textarea 
+              rows='3' 
+              name='description' 
+              type="text" 
+              className='w-full p-5 rounded-lg text-gray-600 border-[1.5px] border-[#e7e7e9] mb-2 focus:shadow-red-200 focus:shadow-sm' 
+              onChange={(e) => setCollectionDesc(e.currentTarget.value)}
+              />
               <div className="w-full flex justify-start gap-3 items-center mt-5">
-              <button className='px-3 py-2 text-[11px] md:text-[13px] rounded-full bg-black text-white font-medium hover:opacity-80 transition-all duration-300'>
-                Create new collection
+              { !isSubmitting ? (
+                <button 
+                className='px-3 py-2 text-[11px] md:text-[13px] rounded-full bg-black text-white font-medium hover:opacity-80 transition-all duration-300'
+                onClick={createCollection}
+                >
+                  Create new collection
+                </button>
+              ) : (
+                <button 
+              className='px-3 py-2 text-[11px] md:text-[13px] rounded-full bg-black/20 text-white font-medium hover:opacity-80 transition-all duration-300 flex items-center justify-center gap-2'
+              >
+                Creating collection <AiOutlineLoading3Quarters className="w-5 h-5 animate-spin"/>
               </button>
+              )}
               <button
               onClick={()=> setIsCreateCollectionOpen(false)}
                className='px-3 py-2 text-[11px] md:text-[13px] rounded-full bg-gray-200 text-[#0d0c22] font-medium'>

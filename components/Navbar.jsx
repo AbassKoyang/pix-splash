@@ -94,8 +94,8 @@ await controls.start({ x: 0, opacity: 1 });
                         <Link href='/profile'><Image src={session.user.image} width={90} height={90} alt='Profile Image' className='object-contain rounded-full'/></Link>
                             <p className='font-medium text-black text-lg'>{session.user.name}</p>
                         </div>
-                        <Link href='/' className='text-gray-700 font-normal text-sm'>Favourites</Link>
-                        <Link href='/' className='text-gray-700 font-normal text-sm'>Saved</Link>
+                        <Link href='/profile' className='text-gray-700 font-normal text-sm'>Favourites</Link>
+                        <Link href='/profile/collections' className='text-gray-700 font-normal text-sm'>Collections</Link>
                         <button className="w-full border-t-[0.5px] border-gray-100 pt-3 text-black" onClick={() => {setMenuToggle(false), setIsConfirmSignOut(true), handleClick}}>
                             Sign Out
                         </button>

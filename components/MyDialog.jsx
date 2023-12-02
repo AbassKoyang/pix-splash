@@ -24,9 +24,9 @@ const MyDialog = ({isOpen, closeModal, images}) => {
   const [moreInfoModal, setMoreInfoModal] = useState(false);
   const [submitting, setIsSubmitting] = useState(false);
   const [collectionModal, setCollectionModal] = useState(false);
-  const [stats, setStats] = useState(null)
+  const [stats, setStats] = useState(null);
   const [isFetchingCollections, setIsFetchingCollections] = useState(false);
-  const [collections, setCollections] = useState([]);
+const [collections, setCollections] = useState([]);
   
 
     // State to toggle animation
@@ -60,36 +60,6 @@ const MyDialog = ({isOpen, closeModal, images}) => {
     } catch (error) {
       console.error('Download failed:', error);
       toast.error("Failed to download image, please try again.")
-    }
-  };
-
-
-  const createCollection = async (e) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-
-    try {
-      const response = await fetch('/api/collections/new', {
-        method: "POST",
-        body: JSON.stringify({
-          authorName: session?.user.name,
-          title: "Test collection",
-          collectionDescription: "Test collection description.",
-          content: [{urls, links, user, id, color, likes, description, created_at, updated_at, width, height}],
-          userId: session?.user.id,
-        })
-      })
-
-      if(response.ok){
-        toast.success('Collection created successfully!')
-      }
-      if(!response.ok){
-        toast.error('Could not create collection.')
-      }
-    } catch (error) {
-      console.log(error);
-    }finally{
-      setIsSubmitting(false)
     }
   };
 
@@ -270,7 +240,7 @@ const MyDialog = ({isOpen, closeModal, images}) => {
           </Dialog.Panel>
         </Transition.Child>
         </div>
-        <SaveCollection isOpen={collectionModal} createCollection={createCollection} setCollectionModal={()=> setCollectionModal(false)} collections={collections} isFetchingCollections={isFetchingCollections}/>
+        <SaveCollection isOpen={collectionModal} setCollectionModal={()=> setCollectionModal(false)} collections={collections} isFetchingCollections={isFetchingCollections}/>
         <MoreInfo isOpen={moreInfoModal} image={images} stats={stats} closeModal={()=> setMoreInfoModal(false)} />
         </div>
       </Dialog>
