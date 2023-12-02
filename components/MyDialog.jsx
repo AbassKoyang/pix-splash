@@ -240,7 +240,7 @@ const [collections, setCollections] = useState([]);
           </Dialog.Panel>
         </Transition.Child>
         </div>
-        <SaveCollection isOpen={collectionModal} setCollectionModal={()=> setCollectionModal(false)} collections={collections} isFetchingCollections={isFetchingCollections}/>
+        <SaveCollection isOpen={collectionModal} setCollectionModal={()=> setCollectionModal(false)} collections={collections} isFetchingCollections={isFetchingCollections} imageProperties={images} />
         <MoreInfo isOpen={moreInfoModal} image={images} stats={stats} closeModal={()=> setMoreInfoModal(false)} />
         </div>
       </Dialog>

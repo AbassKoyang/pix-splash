@@ -6,12 +6,15 @@ import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import toast from 'react-hot-toast';
 import { useSession } from 'next-auth/react';
 
-const SaveCollection = ({isOpen, setCollectionModal, collections, isFetchingCollections}) => {
+const SaveCollection = ({isOpen, setCollectionModal, collections, isFetchingCollections, imageProperties}) => {
 const [isCreateCollectionOpen, setIsCreateCollectionOpen] = useState(false);
 const [isSubmitting, setIsSubmitting] = useState(false);
 const {data:session} = useSession();
 const [collectionTitle, setCollectionTitle] = useState(null);
 const [collectionDesc, setCollectionDesc] = useState(null);
+const [isEmpty, setIsEmpty] = useState(true);
+const [isAddingToCollection, setIsAddingToCollection] = useState(false)
+const {urls, links, user, id, color, likes, description, created_at, updated_at, width, height} = imageProperties;
 
 const createCollection = async () => {
   setIsSubmitting(true);
@@ -37,10 +40,40 @@ const createCollection = async () => {
   } catch (error) {
     console.log(error);
   }finally{
+    setIsCreateCollectionOpen(false);
     setIsSubmitting(false)
   }
 };
 
+const addToCollection = async (collection) => {
+  setIsAddingToCollection(true);
+  try {
+   const response = await fetch(`api/collections/${collection._id.toString()}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({imageProperties})
+    });
+
+    if(response.ok){
+      toast.success('Image added to collection successfully!');
+    }
+  } catch (error) {
+    toast.error('Failed to add image to collection.')
+    console.log(error)
+  }finally{
+    setIsAddingToCollection(false);
+  }
+};
+
+const handleEmptyTitle = (e) => {
+  if(e === '' || e === ' '){
+    setIsEmpty(true)
+  }else{
+    setIsEmpty(false)
+  }
+}
   return (
     <div className={`fixed w-[100vw] h-[100vh] top-0 left-0 bg-black/25 z-70 ${isOpen? 'flex' : 'hidden'} justify-center items-center overflow-hidden`}>
           <div className={`relative w-full max-w-[22rem] md:max-w-2xl bg-white rounded-lg px-6 py-8 md:p-16 flex justify-center items-center`}>
@@ -63,12 +96,13 @@ const createCollection = async () => {
                     const {id, title, collectionDescription, content, createdAt} = collection;
                     const {urls, links, user, color, likes, description, created_at, updated_at, width, height} = content[content.length - 1];
                      return (
-                      <button key={id} className='p-2 md:p-3 w-full flex gap-3 items-center rounded-md outline-0 border-[1.5px] border-[#e7e7e9] hover:shadow-red-200 hover:shadow-sm focus:shadow-red-200 focus:shadow-sm'>
+                      <button key={id} onClick={() => addToCollection(collection)} className='relative p-2 md:p-3 w-full flex gap-3 items-center rounded-md outline-0 border-[1.5px] border-[#e7e7e9] hover:shadow-red-200 hover:shadow-sm focus:shadow-red-200 focus:shadow-sm'>
                       <Image src={urls.small} width={50} height={50} className='rounded-md'/>                      
                       <div className="flex flex-col gap-1 items-start">
                       <p className='text-[15px] text-[#0d0c22] font-semibold'>{title}</p>
                       <p className='text-[13px] text-[#6e6d7a] font-normal'>{content.length} shot</p>
                       </div>
+                      <AiOutlineLoading3Quarters className={`w-5 h-5 animate-spin absolute top-3 right-3 ${isAddingToCollection? 'block' : 'hidden'}`}/>
                       </button>
                       )
                     })
@@ -98,7 +132,7 @@ const createCollection = async () => {
               name='name' 
               type="text" 
               className='w-full p-5 rounded-lg text-gray-600 bg-white border-[1.5px] border-[#e7e7e9] mb-2 focus:shadow-red-200 focus:shadow-sm' 
-              onChange={(e) => setCollectionTitle(e.target.value)}
+              onChange={(e) => {setCollectionTitle(e.target.value), handleEmptyTitle(e.target.value)}}
               />
               <label htmlFor="description" className='mt-3 text-sm md:text-[16px] font-medium text-gray-600'>Description (Optional)</label>
               <textarea 
@@ -111,13 +145,15 @@ const createCollection = async () => {
               <div className="w-full flex justify-start gap-3 items-center mt-5">
               { !isSubmitting ? (
                 <button 
-                className='px-3 py-2 text-[11px] md:text-[13px] rounded-full bg-black text-white font-medium hover:opacity-80 transition-all duration-300'
-                onClick={()=> createCollection()}
+                className={`px-3 py-2 text-[11px] md:text-[13px] rounded-full ${isEmpty? 'bg-gray-200' : 'bg-black'} text-white font-medium hover:opacity-80 transition-all duration-300`}
+                onClick={createCollection}
+                disabled={isEmpty}
                 >
                   Create new collection
                 </button>
               ) : (
                 <button 
+                disabled={isSubmitting}
               className='px-3 py-2 text-[11px] md:text-[13px] rounded-full bg-black/20 text-white font-medium hover:opacity-80 transition-all duration-300 flex items-center justify-center gap-2'
               >
                 Creating collection <AiOutlineLoading3Quarters className="w-5 h-5 animate-spin"/>
