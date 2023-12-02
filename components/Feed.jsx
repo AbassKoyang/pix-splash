@@ -112,7 +112,7 @@ const Feed = ({ image, dataLoaded }) => {
                 <BiDownload className="w-5 h-5" />
               </button>
             </>
-           <MyDialog isOpen={isOpen} closeModal={() => {setIsOpen(false)}} images={image} />
+           <MyDialog isOpen={isOpen} closeModal={() => {setIsOpen(false)}} images={image} addToFavourite={addToFavourites} />
          </section>
             ) : (
               <SkeletonLoader/>

@@ -14,7 +14,7 @@ import MoreInfo from './MoreInfo';
 import SaveCollection from './SaveCollection';
 import { connectToDB } from '@/utils/database';
 
-const MyDialog = ({isOpen, closeModal, images}) => {
+const MyDialog = ({isOpen, closeModal, images, addToFavourites}) => {
 
   const {data: session} = useSession();
   const {urls, links, user, id, color, likes, description, created_at, updated_at, width, height} = images;
@@ -154,7 +154,7 @@ const [collections, setCollections] = useState([]);
               <div className="flex gap-2 md:gap-4">
                 <button 
                 className="block lg:hidden px-3 py-0 rounded-full md:rounded-none bg-transparent border border-gray-300 hover:border-black transition-all duration-300"
-                onClick={()=> setCollectionModal(true)}>
+                onClick={addToFavourites}>
                   <BiHeart className='w-4 h-4 md:w-5 md:h-5'/>
                 </button>
 

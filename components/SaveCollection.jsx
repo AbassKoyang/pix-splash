@@ -13,8 +13,7 @@ const {data:session} = useSession();
 const [collectionTitle, setCollectionTitle] = useState(null);
 const [collectionDesc, setCollectionDesc] = useState(null);
 
-const createCollection = async (e) => {
-  e.preventDefault();
+const createCollection = async () => {
   setIsSubmitting(true);
 
   try {
@@ -81,7 +80,7 @@ const createCollection = async (e) => {
               className='px-3 py-2 text-[11px] md:text-[13px] text-[#0d0c22] border-[1px] border-[#e7e7e9] rounded-full bg-transparent hover:bg-black hover:text-white font-medium transition-all duration-300'>
                 Create a new collection
               </button>
-              <button className='px-3 py-2 text-[11px] md:text-[13px] md:px-3 md:py-2 rounded-full bg-black text-white font-medium'
+              <button onClick={setCollectionModal} className='px-3 py-2 text-[11px] md:text-[13px] md:px-3 md:py-2 rounded-full bg-black text-white font-medium'
               >
                 Done
               </button>
@@ -113,7 +112,7 @@ const createCollection = async (e) => {
               { !isSubmitting ? (
                 <button 
                 className='px-3 py-2 text-[11px] md:text-[13px] rounded-full bg-black text-white font-medium hover:opacity-80 transition-all duration-300'
-                onClick={createCollection}
+                onClick={()=> createCollection()}
                 >
                   Create new collection
                 </button>
