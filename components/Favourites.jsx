@@ -31,6 +31,7 @@ useEffect(() => {
 }, [])
 
 const deleteFromFavourites = async (favouritePost) => {
+  setIsSubmitting(true);
   const hasConfirmed = confirm("Are you sure you want to remove this image from favourites?");
  if(hasConfirmed){
   try {
@@ -44,7 +45,9 @@ const deleteFromFavourites = async (favouritePost) => {
   } catch (error) {
     toast.error('Failed to delete image from favourites.')
     console.log(error)
-  };
+  }finally{
+  setIsSubmitting(false);
+  }
  };
 };
 
@@ -72,7 +75,7 @@ const deleteFromFavourites = async (favouritePost) => {
     
   return (
     <>
-    <div className="w-full bg-blue-300 flex items-center justify-center gap-3 py-4 px-6 lg:px-14 mt-5 border-b border-gray-300">
+    <div className="w-full flex items-center justify-center gap-3 py-4 px-6 lg:px-14 mt-5 border-b border-gray-300">
           <button className="bg-black text-white px-4 py-2 rounded-full">Favourites</button>
           <Link href='/profile/collections' className="bg-[#f8f7f4] text-black px-4 py-2 rounded-full">Collections</Link>
     </div>
@@ -84,7 +87,7 @@ const deleteFromFavourites = async (favouritePost) => {
               </div>
             ) : (
               favouritePosts.map((favouritePost) => (
-                <div className="w-full flex flex-col items-center px-3 mb-4 relative">
+                <div className="w-full flex flex-col items-center px-3 mb-4 relative" key={favouritePost.id}>
                     <div className="w-full h-[250px] mb-4 rounded-lg overflow-hidden object-fit group transition-all duration-300">
                       <img src={favouritePost.urls.small} alt={favouritePost.description} className='w-full h-full' />
                       <button className="absolute z-10 top-4 right-8 p-2 rounded-full bg-[#e9e9e9] hover:bg-white transition-all duration-300 cursor-pointer" onClick={(event) => {
