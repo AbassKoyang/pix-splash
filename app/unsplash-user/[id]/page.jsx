@@ -5,11 +5,7 @@ const UnslashUserProfile = () => {
     const [user, setUser] = useState(null);
 
     useEffect(() => {
-      first
-    
-      return () => {
-        second
-      }
+      
     }, [third])
     
   return (
