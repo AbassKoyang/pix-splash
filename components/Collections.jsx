@@ -47,30 +47,36 @@ useEffect(() => {
                   </div>
                 ) : (
                   collections.map((collection) => {
-                    const {content} = collection;
+                    const {content, title, _id} = collection;
                     return (
-                      <div className="w-full flex flex-col gap-1 h-[380px] rounded-lg bg-gray-300 overflow-hidden mb-4" key={collection.title}>
-                        <div className="w-full h-[70%]">
-                          <img
-                          src={content[0].urls.small} alt={content[0].description}
-                          className='w-full h-full'
-                          />
+                      <Link href='/profile/collections/' className='flex flex-col gap-3 mb-4 items-center group'>
+                         <div className="w-full flex flex-col h-[350px] rounded-lg bg-gray-300 overflow-hidden" key={collection.title}>
+                            <div className="w-full h-[75%] object-contain">
+                              <img
+                              src={content[0].urls.small} alt={content[0].description}
+                              className=''
+                              />
+                            </div>
+                            <div className="w-full h-[25%] flex border-t-2 border-white">
+                              <img
+                                src={content[0].urls.small} alt={content[0].description}
+                                className='w-full h-full border-r-2 border-white'
+                                />
+                              <img
+                                src={content[0].urls.small} alt={content[0].description}
+                                className='w-full h-full'
+                                />
+                              <img
+                                src={content[0].urls.small} alt={content[0].description}
+                                className='w-full h-full border-l-2 border-white'
+                                />
+                            </div>
                         </div>
-                        <div className="w-full h-[30%] flex gap-1">
-                        <img
-                          src={content[0].urls.small} alt={content[0].description}
-                          className='w-full h-full'
-                          />
-                        <img
-                          src={content[0].urls.small} alt={content[0].description}
-                          className='w-full h-full'
-                          />
-                        <img
-                          src={content[0].urls.small} alt={content[0].description}
-                          className='w-full h-full'
-                          />
+                        <div className='flex flex-col gap-1 items-center'>
+                          <h1 className='text-[18px] text-black font-medium group-hover:underline'> {title} </h1>
+                          <p className='text-sm text-gray-400'>{content.length} shots</p>
                         </div>
-                      </div>
+                      </Link>
                     );
                   })
                 )
