@@ -103,7 +103,7 @@ const Feed = ({ image, dataLoaded }) => {
               <div className="absolute z-10 bottom-5 left-3 items-center justify-center gap-2 hidden  md:group-hover:flex transition-all duration-300"
               onClick={(event) => event.stopPropagation()} 
               >
-                <Link href='/'><img className="w-10 h-10 rounded-full border-white border-2" src={image.user.profile_image.small} alt={image.user.name} /></Link>
+                <Link href={`/unsplash-user/${image.user.username}`}><img className="w-10 h-10 rounded-full border-white border-2" src={image.user.profile_image.small} alt={image.user.name} /></Link>
                 <Link href='/'><p className="font-medium text-sm text-black px-2 py-2 rounded-full cursor-pointer bg-[#e9e9e9]">{image.user.username}</p></Link>
               </div>
               <button className="hidden  md:group-hover:block  absolute z-10 bottom-5 right-4 p-2 rounded-full bg-[#e9e9e9] hover:bg-white transition-all duration-300 cursor-pointer" onClick={(event) => {
