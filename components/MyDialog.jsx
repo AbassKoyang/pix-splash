@@ -142,11 +142,11 @@ const [collections, setCollections] = useState([]);
                   <button onClick={closeModal} className='rounded-full outline-none border-none stroke-none'><BiArrowBack className='w-5 h-5 md:w-8 md:h-8'/></button>
 
                   <div className="flex items-center justify-center gap-3">
-                    <Link href='/' className=''><img src={user.profile_image.small} className='w-11 h-11 md:w-16 md:h-16 rounded-full object-contain'></img></Link>
+                    <Link href={`/unsplash-user/${user.username}`} className=''><img src={user.profile_image.small} className='w-11 h-11 md:w-16 md:h-16 rounded-full object-contain'></img></Link>
 
                     <div className="flex flex-col">
                       <p className='text-sm md:text-xl font-bold capitalize text-black'>{user.name}</p>
-                      <Link href='/'><p className='text-[12px] md:text-lg font-medium capitalize text-gray-600'>@{user.username}</p></Link>
+                      <Link href={`/unsplash-user/${user.username}`}><p className='text-[12px] md:text-lg font-medium capitalize text-gray-600'>@{user.username}</p></Link>
                     </div>
                   </div>
                </div>
