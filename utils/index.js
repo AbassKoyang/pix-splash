@@ -40,6 +40,7 @@ export const fetchUnsplashUserProfile = async (username) => {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
     const data = await response.json();
+    console.log(data)
     return data;
   } catch (error) {
     console.error('Error fetching unsplash user profile:', error);
