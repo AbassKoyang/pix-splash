@@ -46,3 +46,16 @@ export const fetchUnsplashUserProfile = async (username) => {
     console.error('Error fetching unsplash user profile:', error);
   }
 };
+export const fetchUnsplashUserPhotos = async (username) => {
+  try {
+    const response = await fetch(`https://api.unsplash.com/users/${username}/photos?client_id=NYZmd55_VTMkgRhbnDUsQvBwV2tSjfoABwwu-Zp4uJ8`);
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    const data = await response.json();
+    console.log(data)
+    return data;
+  } catch (error) {
+    console.error('Error fetching unsplash user photos:', error);
+  }
+};
