@@ -15,7 +15,7 @@ useEffect(() => {
   const fetchCollections = async () => {
     setIsFetchingCollections(true)
     try {
-      const response = await fetch(`${'http://localhost:3000' || 'https://pix-splash.vercel.app' }/api/users/${session?.user.id}/collections`);
+      const response = await fetch(`../api/users/${session?.user.id}/collections`);
       const collections = await response.json();
       setCollections(collections);
       console.log(collections);
@@ -49,7 +49,7 @@ useEffect(() => {
                   collections.map((collection) => {
                     const {content, title, _id} = collection;
                     return (
-                      <Link href='/profile/collections/' className='flex flex-col gap-3 mb-4 items-center group' key={collection.title}>
+                      <Link href='/profile/collections/' className='flex flex-col gap-3 mb-4 items-center group' key={_id}>
                          <div className="w-full flex flex-col h-[350px] rounded-lg bg-gray-300 overflow-hidden">
                             <div className="w-full h-[75%] object-contain">
                               <img

@@ -27,3 +27,11 @@ export const PATCH = async (request, {params}) => {
         return new Response("Error adding image to colection", { status: 500 });
     }
 }
+
+export const GET = async () => {
+  try {
+    cosnt
+  } catch (error) {
+    
+  }
+}
