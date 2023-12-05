@@ -54,7 +54,9 @@ const UnslashUserProfile = () => {
         {loading ? (
         <p>Loading... <AiOutlineLoading3Quarters/></p>
       ) : (
-        <UnsplashUserProfile user={user} />
+         user && (
+          <UnsplashUserProfile user={user} />
+         )
       )}
     </section>
   )

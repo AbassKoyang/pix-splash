@@ -49,8 +49,8 @@ useEffect(() => {
                   collections.map((collection) => {
                     const {content, title, _id} = collection;
                     return (
-                      <Link href='/profile/collections/' className='flex flex-col gap-3 mb-4 items-center group'>
-                         <div className="w-full flex flex-col h-[350px] rounded-lg bg-gray-300 overflow-hidden" key={collection.title}>
+                      <Link href='/profile/collections/' className='flex flex-col gap-3 mb-4 items-center group' key={collection.title}>
+                         <div className="w-full flex flex-col h-[350px] rounded-lg bg-gray-300 overflow-hidden">
                             <div className="w-full h-[75%] object-contain">
                               <img
                               src={content[0].urls.small} alt={content[0].description}
