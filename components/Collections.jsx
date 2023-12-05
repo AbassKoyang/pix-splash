@@ -31,6 +31,13 @@ useEffect(() => {
     }
 }, [])
 
+const truncateEmail = () => {
+  const email = session?.user?.email;
+  const truncatedEmail = email.toLocaleLowerCase().toString().replace('@gmail.com', '');
+  return truncatedEmail;
+}
+const truncatedEmail = truncateEmail();
+
   
 
   return (
@@ -49,7 +56,7 @@ useEffect(() => {
                   collections.map((collection) => {
                     const {content, title, _id} = collection;
                     return (
-                      <Link href='/profile/collections/' className='flex flex-col gap-3 mb-4 items-center group' key={_id}>
+                      <Link href={`${truncatedEmail}/collection/${_id}`} className='flex flex-col gap-3 mb-4 items-center group' key={_id}>
                          <div className="w-full flex flex-col h-[350px] rounded-lg bg-gray-300 overflow-hidden">
                             <div className="w-full h-[75%] object-contain">
                               <img

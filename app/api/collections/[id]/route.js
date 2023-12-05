@@ -28,10 +28,13 @@ export const PATCH = async (request, {params}) => {
     }
 }
 
-export const GET = async () => {
+export const GET = async ({params}) => {
+  const _id = params.id
   try {
     await connectToDB();
+   const collection = await Collection.findOne({_id:_id});
+   return new Response(JSON.stringify(collection), {status: 200});
   } catch (error) {
-    
+    return new Response('Failed to fetch collection', {status: 500});
   }
-}
+};

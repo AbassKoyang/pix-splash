@@ -2,10 +2,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React from 'react';
-import { BsGlobe } from "react-icons/bs";
-import { BsInstagram } from "react-icons/bs";
-import { BsTwitterX } from "react-icons/bs";
-
 const UnsplashUserProfile = ({user}) => {
     const {username, portfolio_url, twitter_username, instagram_username} = user;
     const pathName = usePathname();
@@ -37,11 +33,6 @@ const UnsplashUserProfile = ({user}) => {
             </div>
             <div className="w-full mt-6">
             <p className='text-[#0d0c22] text-[16px] md:text-[18px] leading-[28px] font-semibold'>Socials</p>
-            <div className="w-full flex gap-6 items-center mt-2">
-                <a href={portfolio_url} className='p-2 rounded-full bg-[#f8f7f4] hover:bg-[#0d0c22] group'><BsGlobe className='text-[#0d0c22] group-hover:text-white w-6 h-6'/></a>
-                <a className='p-2 rounded-full bg-[#f8f7f4] hover:bg-[#0d0c22] group'><BsTwitterX className='text-[#0d0c22] group-hover:text-white w-6 h-6'/></a>
-                <a className='p-2 rounded-full bg-[#f8f7f4] hover:bg-[#0d0c22] group'><BsInstagram className='text-[#0d0c22] group-hover:text-white w-6 h-6'/></a>
-            </div>
         </div>
         </div>
     </div>
