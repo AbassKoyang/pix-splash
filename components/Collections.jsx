@@ -15,7 +15,7 @@ useEffect(() => {
   const fetchCollections = async () => {
     setIsFetchingCollections(true)
     try {
-      const response = await fetch(`http://localhost:3000/api/users/${session?.user.id}/collections`);
+      const response = await fetch(`${'http://localhost:3000' || 'https://pix-splash.vercel.app' }/api/users/${session?.user.id}/collections`);
       const collections = await response.json();
       setCollections(collections);
       console.log(collections);

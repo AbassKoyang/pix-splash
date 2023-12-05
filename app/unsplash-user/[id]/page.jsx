@@ -53,10 +53,8 @@ const UnslashUserProfile = () => {
         <Navbar isSearchAllowed={true} otherStyles={`${'static'}`} onSearch={handleSearch}/>
         {loading ? (
         <p>Loading... <AiOutlineLoading3Quarters/></p>
-      ) : user ? (
-        <UnsplashUserProfile user={user} />
       ) : (
-        <p>User not found.</p>
+        <UnsplashUserProfile user={user} />
       )}
     </section>
   )
