@@ -71,8 +71,8 @@ await controls.start({ x: 0, opacity: 1 });
             </Link>
         </div>
 
-            <div className={`w-full max-w-[15rem] md:max-w-4xl ${isSearchAllowed ? 'flex' : 'hidden'} justify-between items-center p-2 pl-3 lg:px-3 lg:py-3 bg-gray-200 lg:bg-gray-300 rounded-full`}>
-                <input type="text" placeholder="Search for photos..." required className="w-[90%] h-full outline-none border-none stroke-none text-gray-700 text-sm md:text-[16px] bg-transparent" value={query} onKeyDown={handlePress} onChange={(e) => {handleQueryChange(e)}}/>
+            <div className={`w-full max-w-[15rem] md:max-w-4xl ${isSearchAllowed ? 'flex' : 'hidden'} justify-between items-center p-2 pl-3 lg:px-3 lg:py-2 bg-gray-200 lg:bg-gray-300 rounded-full`}>
+                <input type="text" placeholder="Search for photos..." required className="w-[90%] h-full md:h-[40px] outline-none border-none stroke-none text-gray-700 text-sm md:text-[16px] bg-transparent" value={query} onKeyDown={handlePress} onChange={(e) => {handleQueryChange(e)}}/>
                 <button onClick={handleSearch}><BiSearch className='w-6 h-6 px-1 py-1 rounded-full bg-black text-white'/></button>
             </div>
 
@@ -81,7 +81,7 @@ await controls.start({ x: 0, opacity: 1 });
 
                 <>
                 <button className='block transition-all duration-300' onClick={() => {setMenuToggle(!menuToggle), handleClick}}>
-                    <Image src={session.user.image} alt='Profile Image' width={50} height={50} className='object-contain rounded-full'/>
+                    <Image src={session.user.image} alt='Profile Image' width={40} height={40} className='rounded-full'/>
                 </button>
                     {menuToggle && (
                         <motion.div

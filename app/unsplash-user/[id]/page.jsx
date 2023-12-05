@@ -49,7 +49,7 @@ const UnslashUserProfile = () => {
     }, [])
     
   return (
-    <section className='w-full'>
+    <section className='w-full items-center justify-center'>
         <Navbar isSearchAllowed={true} otherStyles={`${'static'}`} onSearch={handleSearch}/>
         {loading ? (
         <p>Loading... <AiOutlineLoading3Quarters/></p>

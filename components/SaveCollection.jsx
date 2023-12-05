@@ -101,7 +101,7 @@ const handleEmptyTitle = (e) => {
                     const {urls, links, user, color, likes, description, created_at, updated_at, width, height} = content[content.length - 1];
                      return (
                       <button key={id} onClick={() => addToCollection(collection)} className='relative p-2 md:p-3 w-full flex gap-3 items-center rounded-md outline-0 border-[1.5px] border-[#e7e7e9] hover:shadow-red-200 hover:shadow-sm focus:shadow-red-200 focus:shadow-sm'>
-                      <Image src={urls.small} alt={description} width={50} height={50} className='rounded-md'/>                      
+                      <Image src={urls.small} alt={`collection cover image: ${description}`} width={50} height={50} className='rounded-md'/>                      
                       <div className="flex flex-col gap-1 items-start">
                       <p className='text-[15px] text-[#0d0c22] font-semibold'>{title}</p>
                       <p className='text-[13px] text-[#6e6d7a] font-normal'>{content.length} shot</p>

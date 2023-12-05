@@ -13,6 +13,7 @@ const Feed = ({ image, dataLoaded }) => {
 
     const addToFavourites = async () => {
       const {
+        _id,
         id,
         created_at,
         updated_at,
@@ -32,6 +33,7 @@ const Feed = ({ image, dataLoaded }) => {
           const response = await fetch("/api/favourites/new", {
             method: "POST",
             body: JSON.stringify({
+              _id,
               userId: session?.user.id,
               id: id,
               created_at: created_at,
@@ -50,8 +52,10 @@ const Feed = ({ image, dataLoaded }) => {
   
           if (response.status === 201) {
             toast.success("Image added to favourite");  
+            } else if(response.status === 208){
+              toast.error('Image has already been added to favourite.', {icon: '⛔'});
             } else {
-              toast.error('Failed to add image to favourites');
+              toast.error('Failed to add image to favourite.', {icon: '⛔'});
             };
   
         } catch (error) {
@@ -61,7 +65,9 @@ const Feed = ({ image, dataLoaded }) => {
           setIsSubmitting(false);
         }
       } else {
-        toast('Please sign in to add image to favourites', {style: {backgroundColor: 'black', color: 'white'}, duration: 1500})
+        toast.error('Please sign in to add image to favourites', {
+          icon: '⛔'
+        })
       } 
       setIsSubmitting(false)
     }
@@ -112,7 +118,7 @@ const Feed = ({ image, dataLoaded }) => {
                 <BiDownload className="w-5 h-5" />
               </button>
             </>
-           <MyDialog isOpen={isOpen} closeModal={() => {setIsOpen(false)}} images={image} addToFavourite={addToFavourites} />
+           <MyDialog isOpen={isOpen} closeModal={() => {setIsOpen(false)}} images={image} />
          </section>
             ) : (
               <SkeletonLoader/>

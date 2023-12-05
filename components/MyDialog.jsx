@@ -6,15 +6,15 @@ import { Dialog, Transition } from '@headlessui/react'
 import { BsCheck2, BsFillInfoCircleFill, BsSave, BsX } from 'react-icons/bs';
 import Link from 'next/link';
 import { BiArrowBack, BiBookmark, BiChevronDown, BiHeart, } from 'react-icons/bi';
-import { AiFillCheckCircle } from 'react-icons/ai';
+import { AiFillCheckCircle, AiOutlineLoading3Quarters} from 'react-icons/ai';
 import { RiShareBoxFill } from 'react-icons/ri';
 import {toast, } from 'react-hot-toast';
 import { fetchImageStats } from '@/utils';
 import MoreInfo from './MoreInfo';
 import SaveCollection from './SaveCollection';
-import { connectToDB } from '@/utils/database';
 
-const MyDialog = ({isOpen, closeModal, images, addToFavourites}) => {
+
+const MyDialog = ({isOpen, closeModal, images,}) => {
 
   const {data: session} = useSession();
   const {urls, links, user, id, color, likes, description, created_at, updated_at, width, height} = images;
@@ -98,7 +98,66 @@ const [collections, setCollections] = useState([]);
     }
     console.log(stats)
   };
+  const addToFavourites = async () => {
+    const {
+      _id,
+      id,
+      created_at,
+      updated_at,
+      width,
+      height,
+      color,
+      likes,
+      description,
+      user,
+      current_user_collections,
+      urls,
+      links,
+    } = images;
+    setIsSubmitting(true);
+    if(session){
+      try {
+        const response = await fetch("/api/favourites/new", {
+          method: "POST",
+          body: JSON.stringify({
+            _id,
+            userId: session?.user.id,
+            id: id,
+            created_at: created_at,
+            updated_at: updated_at,
+            width: width,
+            height: height,
+            color: color,
+            likes: likes,
+            description: description,
+            user: user,
+            current_user_collections: [current_user_collections],
+            urls:  urls,
+            links: links,
+          }),
+        });
 
+        if (response.status === 201) {
+          toast.success("Image added to favourite");  
+          } else if(response.status === 208){
+            toast.error('Image has already been added to favourite.', {icon: '⛔'});
+          } else {
+            toast.error('Failed to add image to favourite.', {icon: '⛔'});
+          };
+
+      } catch (error) {
+        console.log(error);
+        throw new Error(error);
+      } finally{
+        setIsSubmitting(false);
+      }
+    } else {
+      toast.error('Please sign in to add image to favourites', {
+        icon: '⛔'
+      })
+    } 
+    setIsSubmitting(false)
+  }
   return (
     // Use the `Transition` component at the root level
     <Transition show={isOpen} as={Fragment}>
@@ -155,7 +214,7 @@ const [collections, setCollections] = useState([]);
                 <button 
                 className="block lg:hidden px-3 py-0 rounded-full md:rounded-none bg-transparent border border-gray-300 hover:border-black transition-all duration-300"
                 onClick={addToFavourites}>
-                  <BiHeart className='w-4 h-4 md:w-5 md:h-5'/>
+                  {submitting ? (<AiOutlineLoading3Quarters className="w-4 h-4 md:w-5 md:h-5 animate-spin"/>) : (<BiHeart className='w-4 h-4 md:w-5 md:h-5'/>)}
                 </button>
 
                 <button 

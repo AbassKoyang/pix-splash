@@ -49,6 +49,7 @@ const deleteFromFavourites = async (favouritePost) => {
   setIsSubmitting(false);
   }
  };
+ setIsSubmitting(false);
 };
 
 
@@ -88,8 +89,8 @@ const deleteFromFavourites = async (favouritePost) => {
             ) : (
               favouritePosts.map((favouritePost) => (
                 <div className="w-full flex flex-col items-center px-3 mb-4 relative" key={favouritePost.id}>
-                    <div className="w-full h-[250px] mb-4 rounded-lg overflow-hidden object-fit group transition-all duration-300">
-                      <img src={favouritePost.urls.small} alt={favouritePost.description} className='w-full h-full' />
+                    <div className="w-full h-[250px] mb-4 rounded-lg overflow-hidden object-contain group transition-all duration-300">
+                      <img src={favouritePost.urls.full} alt={favouritePost.description} className='' />
                       <button className="absolute z-10 top-4 right-8 p-2 rounded-full bg-[#e9e9e9] hover:bg-white transition-all duration-300 cursor-pointer" onClick={(event) => {
                       event.stopPropagation();
                       handleDownloadImage(favouritePost.urls.full, favouritePost.description);}}>
@@ -99,7 +100,7 @@ const deleteFromFavourites = async (favouritePost) => {
                   <div className="w-full flex justify-between items-center">
                     <div className="flex items-center gap-2">
                       <div className="w-7 h-7 rounded-full overflow-hidden">
-                        <img className='w-full h-full' src={favouritePost.user.profile_image.small} alt={favouritePost.description} />
+                        <img className='w-full h-full' src={favouritePost.user.profile_image.large} alt={favouritePost.description} />
                       </div>
                       <p className='text-sm font-medium text-black'>{favouritePost.user.name}</p>
                     </div>

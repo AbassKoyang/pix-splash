@@ -58,18 +58,38 @@ useEffect(() => {
                               />
                             </div>
                             <div className="w-full h-[25%] flex border-t-2 border-white">
-                              <img
-                                src={content[0].urls.small} alt={content[0].description}
-                                className='w-full h-full border-r-2 border-white'
-                                />
-                              <img
-                                src={content[0].urls.small} alt={content[0].description}
-                                className='w-full h-full'
-                                />
-                              <img
-                                src={content[0].urls.small} alt={content[0].description}
-                                className='w-full h-full border-l-2 border-white'
-                                />
+                              {content[1] ? (
+                                <div className='w-full h-full border-r-2 border-white object-contain'>
+                                <img
+                                  src={content[1].urls.full} alt={content[1].description}
+                                  className=''
+                                  />
+                                </div>
+                              ) : (
+                                <div className='w-full h-full border-r-2 border-white bg-gray-300'></div>
+                              )}
+
+                              {content[2] ? (
+                                <div className='w-full h-full border-r-2 border-white object-contain'>
+                                <img
+                                  src={content[2].urls.full} alt={content[2].description}
+                                  className=''
+                                  />
+                                </div>
+                              ) : (
+                                <div className='w-full h-full border-r-2 border-white bg-gray-300'></div>
+                              )}
+
+                              {content[3] ? (
+                                <div className='w-full h-full border-r-2 border-white object-contain'>
+                                <img
+                                  src={content[3].urls.full} alt={content[3].description}
+                                  className=''
+                                  />
+                                </div>
+                              ) : (
+                                <div className='w-full h-full border-r-2 border-white bg-gray-300'></div>
+                              )}
                             </div>
                         </div>
                         <div className='flex flex-col gap-1 items-center'>

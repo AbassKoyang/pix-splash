@@ -30,7 +30,7 @@ export const PATCH = async (request, {params}) => {
 
 export const GET = async () => {
   try {
-    cosnt
+    await connectToDB();
   } catch (error) {
     
   }
