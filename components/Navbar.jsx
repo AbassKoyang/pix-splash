@@ -21,6 +21,7 @@ const query = useSelector((state) => state.search.query);
 const [menuToggle, setMenuToggle] = useState(false)
 const [isAnimating, setIsAnimating] = useState(false);
 const [isConfirmSignOut, setIsConfirmSignOut] = useState(false);
+const [truncatedEmail, setTruncatedEmail] = useState(null)
 
 useEffect(()=>{
     const setUpProviders = async () =>{
@@ -59,12 +60,17 @@ setIsAnimating(true);
 await controls.start({ x: 0, opacity: 1 });
 };
 
-const truncateEmail = () => {
-    const email = session?.user?.email;
-    const truncatedEmail = email.toLocaleLowerCase().toString().replace('@gmail.com', '');
-    return truncatedEmail;
-}
-const truncatedEmail = truncateEmail();
+useEffect(() => {
+    if(session){
+        const truncateEmail = () => {
+            const email = session?.user?.email || '' ;
+            const truncatedEmail = email.toString().toLowerCase().replace('@gmail.com', '');
+            setTruncatedEmail(truncatedEmail);
+        }
+        truncateEmail();
+    }
+}, [session])
+
 
   return (
     <nav className={`w-full justify-between items-center px-3 py-3 lg:px-8 lg:py-3 flex ${otherStyles} bg-white z-20 shadow-md`}>
@@ -78,7 +84,7 @@ const truncatedEmail = truncateEmail();
         </div>
 
             <div className={`w-full max-w-[15rem] md:max-w-4xl ${isSearchAllowed ? 'flex' : 'hidden'} justify-between items-center p-2 pl-3 lg:px-3 lg:py-2 bg-gray-200 lg:bg-gray-300 rounded-full`}>
-                <input type="text" placeholder="Search for photos..." required className="w-[90%] h-full md:h-[40px] outline-none border-none stroke-none text-gray-700 text-sm md:text-[16px] bg-transparent" value={query} onKeyDown={handlePress} onChange={(e) => {handleQueryChange(e)}}/>
+                <input type="text" placeholder="Search for photos..." required className="w-[90%] h-full md:h-[25px] outline-none border-none stroke-none text-gray-700 text-sm md:text-[16px] bg-transparent" value={query} onKeyDown={handlePress} onChange={(e) => {handleQueryChange(e)}}/>
                 <button onClick={handleSearch}><BiSearch className='w-6 h-6 px-1 py-1 rounded-full bg-black text-white'/></button>
             </div>
 
@@ -97,7 +103,7 @@ const truncatedEmail = truncateEmail();
                         className="w-[90vw] md:max-w-md fixed flex flex-col gap-3 items-start justify-center top-24 right-2 md:right-4 bg-white shadow-lg p-6 rounded-md"
                     >
                         <div className="w-full flex flex-col items-center justify-center gap-2">
-                        <Link href='/profile'><Image src={session.user.image} width={90} height={90} alt='Profile Image' className='object-contain rounded-full'/></Link>
+                        <Link href={`/${truncatedEmail}`}><Image src={session.user.image} width={90} height={90} alt='Profile Image' className='object-contain rounded-full'/></Link>
                             <p className='font-medium text-black text-lg'>{session.user.name}</p>
                         </div>
                         <Link href={`/${truncatedEmail}`} className='text-gray-700 font-normal text-sm'>Favourites</Link>

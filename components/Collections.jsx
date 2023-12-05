@@ -9,6 +9,7 @@ const Collections = () => {
   const [isFetchingCollections, setIsFetchingCollections] = useState(false);
   const [collections, setCollections] = useState([]);
   const {data: session} = useSession();
+  const [truncatedEmail, setTruncatedEmail] = useState(null)
 
 
 useEffect(() => {
@@ -31,19 +32,23 @@ useEffect(() => {
     }
 }, [])
 
-const truncateEmail = () => {
-  const email = session?.user?.email;
-  const truncatedEmail = email.toLocaleLowerCase().toString().replace('@gmail.com', '');
-  return truncatedEmail;
+useEffect(() => {
+  if(session){
+    const truncateEmail = () => {
+        const email = session?.user?.email || '' ;
+        const truncatedEmail = email.toString().toLowerCase().replace('@gmail.com', '');
+        setTruncatedEmail(truncatedEmail);
+    }
+    truncateEmail();
 }
-const truncatedEmail = truncateEmail();
+}, [session]);
 
   
 
   return (
     <section className='w-full px-6 lg:px-14'>
         <div className="w-full flex items-center justify-center gap-3 py-4 mt-5 border-b border-gray-300">
-          <Link href='/profile' className="bg-[#f8f7f4] text-black px-4 py-2 rounded-full">Favourites</Link>
+          <Link href={`/${truncatedEmail}`} className="bg-[#f8f7f4] text-black px-4 py-2 rounded-full">Favourites</Link>
           <button  className="bg-black text-white px-4 py-2 rounded-full">Collections</button>
         </div>
         <section className={`bg-white w-full ${isFetchingCollections ? 'flex justify-center items-center overflow-y-hidden' : 'col-span-4 columns-1 md:columns-3 lg:columns-3'} pt-4 px-6 lg:px-14 overflow-x-hidden`}>
@@ -56,7 +61,7 @@ const truncatedEmail = truncateEmail();
                   collections.map((collection) => {
                     const {content, title, _id} = collection;
                     return (
-                      <Link href={`${truncatedEmail}/collection/${_id}`} className='flex flex-col gap-3 mb-4 items-center group' key={_id}>
+                      <Link href={`/${truncatedEmail}/collections/${_id}`} className='flex flex-col gap-3 mb-4 items-center group' key={_id}>
                          <div className="w-full flex flex-col h-[350px] rounded-lg bg-gray-300 overflow-hidden">
                             <div className="w-full h-[75%] object-contain">
                               <img
@@ -77,18 +82,18 @@ const truncatedEmail = truncateEmail();
                               )}
 
                               {content[2] ? (
-                                <div className='w-full h-full border-r-2 border-white object-contain'>
+                                <div className='w-full h-full border-white object-contain'>
                                 <img
                                   src={content[2].urls.full} alt={content[2].description}
                                   className=''
                                   />
                                 </div>
                               ) : (
-                                <div className='w-full h-full border-r-2 border-white bg-gray-300'></div>
+                                <div className='w-full h-full border-white bg-gray-300'></div>
                               )}
 
                               {content[3] ? (
-                                <div className='w-full h-full border-r-2 border-white object-contain'>
+                                <div className='w-full h-full border-l-2 border-white object-contain'>
                                 <img
                                   src={content[3].urls.full} alt={content[3].description}
                                   className=''

@@ -9,7 +9,8 @@ const Favourites = () => {
     const {data:session} = useSession();
     const [favouritePosts, setFavouritePosts] = useState([]);
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const [isFetchingFavourites, setIsFetchingFavourites] = useState(false)
+    const [isFetchingFavourites, setIsFetchingFavourites] = useState(false);
+    const [truncatedEmail, setTruncatedEmail] = useState(null);
 
 
 useEffect(() => {
@@ -73,12 +74,22 @@ const deleteFromFavourites = async (favouritePost) => {
     toast.error("Failed to download image");
   }
 };
-    
+useEffect(() => {
+  if(session){
+    const truncateEmail = () => {
+        const email = session?.user?.email || '' ;
+        const truncatedEmail = email.toString().toLowerCase().replace('@gmail.com', '');
+        setTruncatedEmail(truncatedEmail);
+    }
+    truncateEmail();
+}
+}, [session]);
+
   return (
     <>
     <div className="w-full flex items-center justify-center gap-3 py-4 px-6 lg:px-14 mt-5 border-b border-gray-300">
           <button className="bg-black text-white px-4 py-2 rounded-full">Favourites</button>
-          <Link href='/profile/collections' className="bg-[#f8f7f4] text-black px-4 py-2 rounded-full">Collections</Link>
+          <Link href={`/${truncatedEmail}/collections`} className="bg-[#f8f7f4] text-black px-4 py-2 rounded-full">Collections</Link>
     </div>
     <section className={`bg-white ${isFetchingFavourites ? 'flex justify-center items-center overflow-y-hidden' : 'col-span-4 columns-1 md:columns-3 lg:columns-3'} pt-4 px-6 lg:px-14 overflow-x-hidden`}>
         {
