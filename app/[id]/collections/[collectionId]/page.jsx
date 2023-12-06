@@ -9,7 +9,8 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { useDispatch } from 'react-redux';
 import { setImages } from '@/redux/imageSplice';
-import { Content } from 'next/font/google';
+import CollectionView from '@/components/CollectionView';
+
 
 
 const CollectionPage = () => {
@@ -59,31 +60,19 @@ useEffect(() => {
      const data = await response.json();
      setCollection(data);
     } catch (error) {
-      console.log('error while trying to fethc collections', error)
+      console.log('error while trying to fetch collections', error)
     }
   }
   fetchCollections();
 }, [])
 
 
-// if (!session) {
-//   router.push('/')
-// };
-
   return (
     <main className='min-h-screen overflow-x-hidden'>
     <Navbar isSearchAllowed={true} otherStyles={`${navbar ? 'static' : 'static'}`} onSearch={handleSearch}/>
     { 
     collection && (
-          <section className='w-full'>
-          <div className="w-full flex items-center justify-between">
-            <div className="flex flex-col gap-3">
-              <h1 className='text-3xl font-extrabold text-[#0d0c22]'>{collection.title}</h1>
-              <p className='text-[12px] text-gray-300'>{collection.content.length} shots</p>
-              <p className='text-[14px] text-gray-300'>{collection.collectionDescription} </p>
-            </div>
-          </div>
-        </section>
+          <CollectionView collection={collection} />
         )
     }
     </main>
