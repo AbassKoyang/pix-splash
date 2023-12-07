@@ -7,6 +7,7 @@ import { useState, useEffect } from 'react';
 import Hero from '@/components/Hero';
 import Feed from '@/components/Feed';
 import { fetchImages } from '@/utils';
+import fetchInitialImages from '@/utils';
 import Sidebar from '@/components/Sidebar';
 import ShowMore from '@/components/ShowMore';
 import { useSelector } from 'react-redux';
@@ -24,9 +25,9 @@ export default function Home() {
   const images = useSelector((state) => state.imagelist.imagesarray);
 
 
-  const fetchInitialImages = async () => {
+  const fetchInitialImagesTwo = async () => {
     setLoading(true)
-    const newImages = await fetchImages(searchQuery, pagination);
+    const newImages = await fetchInitialImages(pagination);
     if(newImages.length > 0){
       dispatch(setImages(newImages));
     } else {
@@ -36,7 +37,7 @@ export default function Home() {
   };
 
   useEffect(() => {
-    fetchInitialImages();
+    fetchInitialImagesTwo();
   }, [pagination]);
 
 

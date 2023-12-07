@@ -100,7 +100,7 @@ useEffect(() => {
                                   />
                                 </div>
                               ) : (
-                                <div className='w-full h-full border-r-2 border-white bg-gray-300'></div>
+                                <div className='w-full h-full border-l-2 border-white bg-gray-300'></div>
                               )}
                             </div>
                         </div>
