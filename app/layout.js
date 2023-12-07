@@ -3,6 +3,8 @@ import './globals.css'
 import { Providers } from '@/redux/Providers';
 import Provider from '@/components/Provider';
 import { Toaster } from 'react-hot-toast';
+import Footer from '@/components/Footer';
+import ScrollToTop from '@/components/ScrollToTop';
 
 
 const inter = Inter({ subsets: ['latin'] })
@@ -19,6 +21,8 @@ export default function RootLayout({ children }) {
       <body className={`${inter.className} bg-white`}>
         <Provider>
         {children}
+        <ScrollToTop />
+        <Footer />
         </Provider>
         <Toaster/>
         </body>
