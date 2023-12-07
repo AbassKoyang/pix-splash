@@ -7,7 +7,7 @@ import { useState, useEffect } from 'react';
 import Hero from '@/components/Hero';
 import Feed from '@/components/Feed';
 import { fetchImages } from '@/utils';
-import fetchInitialImages from '@/utils';
+import { fetchInitialImages } from '@/utils';
 import Sidebar from '@/components/Sidebar';
 import ShowMore from '@/components/ShowMore';
 import { useSelector } from 'react-redux';
@@ -34,6 +34,7 @@ export default function Home() {
       toast.error("Oops! No result.")
     }
     setLoading(false)
+    console.log(newImages)
   };
 
   useEffect(() => {

@@ -61,7 +61,6 @@ useEffect(() => {
      const response = await fetch(`/api/collections/${_id}`,{
       method: 'GET',
       });
-     console.log(_id)
      const data = await response.json();
      setCollection(data);
     } catch (error) {
@@ -77,7 +76,7 @@ useEffect(() => {
     <main className={`min-h-screen overflow-x-hidden`}>
     <Navbar isSearchAllowed={true} otherStyles={`${navbar ? 'static' : 'static'}`} onSearch={handleSearch}/>
     { 
-      !collectionLoading && collection.length > 0 ? (
+      !collectionLoading && collection? (
           <CollectionView collection={collection} />
         ) : (
           <div className='w-full flex items-center justify-center py-5'>

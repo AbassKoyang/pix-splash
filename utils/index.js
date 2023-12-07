@@ -4,7 +4,7 @@ import { Toaster, toast } from "react-hot-toast";
 export const fetchImages = async (searchQuery, page) => {
   try {
     const response = await fetch(
-      `https://api.unsplash.com/search/photos?page=${page}&per_page=20&query=${searchQuery}&client_id=NYZmd55_VTMkgRhbnDUsQvBwV2tSjfoABwwu-Zp4uJ8`
+      `https://api.unsplash.com/search/photos?page=${page}&per_page=30&query=${searchQuery}&client_id=NYZmd55_VTMkgRhbnDUsQvBwV2tSjfoABwwu-Zp4uJ8`
     );
 
     if (!response.ok) {
@@ -20,10 +20,10 @@ export const fetchImages = async (searchQuery, page) => {
     toast.error("Failed to fetch images. Please try check your internet connection.", {duration: '10000'});
   }
 };
-export const fetchInitialImages = async (page) => {
+export const fetchInitialImages = async () => {
   try {
     const response = await fetch(
-      `https://api.unsplash.com/photos?page=${page}&client_id=NYZmd55_VTMkgRhbnDUsQvBwV2tSjfoABwwu-Zp4uJ8`
+      `https://api.unsplash.com/photos?page=1&per_page=30&client_id=NYZmd55_VTMkgRhbnDUsQvBwV2tSjfoABwwu-Zp4uJ8`
     );
 
     if (!response.ok) {
@@ -31,12 +31,12 @@ export const fetchInitialImages = async (page) => {
     }
 
     const data = await response.json();
-    const result = data.results;
+    const result = data
     return result;
   } catch (error) {
     console.error("Error in fetchImages:", error.message);
     // Handle errors gracefully, e.g., display a user-friendly error message
-    toast.error("Failed to fetch images. Please try check your internet connection.", {duration: '10000'});
+    toast.error("Failed to fetch images. Please try check your internet connection.", {duration: '2000'});
   }
 };
 
