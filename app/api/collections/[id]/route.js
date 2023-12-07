@@ -28,7 +28,7 @@ export const PATCH = async (request, {params}) => {
     }
 }
 
-export const GET = async ({params}) => {
+export const GET = async (request, {params}) => {
   const _id = params.id
   try {
     await connectToDB();
