@@ -36,8 +36,6 @@ const UnslashUserProfile = () => {
             setLoading(true)
             try {
                 const data =  await fetchUnsplashUserProfile(username);
-                console.log('data', data);
-                console.log(pathName)
                 setUser(data);
             } catch (error) {
                 console.error('Error fetching Unsplash user profile:', error);

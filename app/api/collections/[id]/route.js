@@ -38,3 +38,14 @@ export const GET = async (request, {params}) => {
     return new Response('Failed to fetch collection', {status: 500});
   }
 };
+
+export const DELETE = async (request, {params}) => {
+    try {
+        await connectToDB();
+        await Collection.findByIdAndDelete(params.id);
+        return new Response('Collection deleted from succesfully', {status: 200})
+    } catch (error) {
+      console.log(error)
+        return new Response("Error deleting collection", { status: 500 });
+    } 
+}

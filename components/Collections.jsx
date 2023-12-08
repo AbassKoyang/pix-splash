@@ -19,7 +19,6 @@ useEffect(() => {
       const response = await fetch(`../api/users/${session?.user.id}/collections`);
       const collections = await response.json();
       setCollections(collections);
-      console.log(collections);
     } catch (error) {
       console.log(error);
     }finally{

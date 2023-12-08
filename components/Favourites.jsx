@@ -110,10 +110,10 @@ useEffect(() => {
                     </div>
                   <div className="w-full flex justify-between items-center">
                     <div className="flex items-center gap-2">
-                      <div className="w-7 h-7 rounded-full overflow-hidden">
+                      <Link href={`/unsplash-user/${favouritePost.user.username}`} className="w-7 h-7 rounded-full overflow-hidden">
                         <img className='w-full h-full' src={favouritePost.user.profile_image.large} alt={favouritePost.description} />
-                      </div>
-                      <p className='text-sm font-medium text-black'>{favouritePost.user.name}</p>
+                      </Link>
+                      <Link href={`/unsplash-user/${favouritePost.user.username}`} className='text-sm font-medium text-black'>{favouritePost.user.name}</Link>
                     </div>
                     <button className="bg-black rounded-full p-2 cursor-pointer" onClick={(event) => {
                         event.stopPropagation();
