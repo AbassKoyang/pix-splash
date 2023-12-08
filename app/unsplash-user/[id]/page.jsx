@@ -52,7 +52,7 @@ const UnslashUserProfile = () => {
         <Navbar isSearchAllowed={true} otherStyles={`${'static'}`} onSearch={handleSearch}/>
         {loading ? (
         <div className='w-full h-screen flex items-center justify-center'>
-        <p>Loading... <AiOutlineLoading3Quarters className='animate-spin w-5 h-5'/></p>
+        <p className='flex items-center justify-center gap-2'>Loading... <AiOutlineLoading3Quarters className='animate-spin w-5 h-5'/></p>
         </div>
       ) : (
          user && (

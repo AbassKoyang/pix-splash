@@ -77,7 +77,7 @@ useEffect(() => {
     <main className={`min-h-screen overflow-x-hidden`}>
     <Navbar isSearchAllowed={true} otherStyles={`${navbar ? 'static' : 'static'}`} onSearch={handleSearch}/>
     { 
-      !collectionLoading ? (
+      !collectionLoading && collection ? (
           <CollectionView collection={collection} />
         ) : (
           <div className='w-full h-screen flex items-center justify-center'>

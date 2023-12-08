@@ -228,7 +228,7 @@ const [collections, setCollections] = useState([]);
                   <p className='hidden md:block text-lg text-gray-900 font-medium'>Save</p>
                 </button>
 
-                <button className="hidden lg:flex px-3 py-1 bg-transparent border border-gray-300 hover:border-black transition-all duration-300 gap-2 items-center">
+                <button className="hidden lg:flex px-3 py-1 bg-transparent transition-all duration-300 gap-2 items-center">
                   <p className='text-lg text-gray-900'> <span className='text-black font-medium'>{likes}</span> Likes</p>
                 </button>
 

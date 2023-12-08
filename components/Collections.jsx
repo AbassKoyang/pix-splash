@@ -62,7 +62,7 @@ useEffect(() => {
                     return (
                       <Link href={`/${truncatedEmail}/collections/${_id}`} className='flex flex-col gap-3 mb-4 items-center group' key={_id}>
                          <div className="w-full flex flex-col h-[350px] rounded-lg bg-gray-300 overflow-hidden">
-                            <div className="w-full h-[75%] object-contain">
+                            <div className="w-full h-[75%] object-cover">
                               <img
                               src={content[0].urls.small} alt={content[0].description}
                               className=''
