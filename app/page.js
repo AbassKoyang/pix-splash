@@ -39,7 +39,7 @@ export default function Home() {
 
   useEffect(() => {
     fetchInitialImagesTwo();
-  }, [pagination]);
+  }, []);
 
 
   const handleSearch = async () => {
@@ -60,6 +60,11 @@ export default function Home() {
     behavior: "smooth"
     })
     setPagination((prevPage) => prevPage + 1);
+    if(searchQuery === ''){
+      fetchInitialImagesTwo()
+    } else {
+      handleSearch();
+    }
   };
   const handleShowLess = () => {
       window.scroll({
@@ -67,6 +72,11 @@ export default function Home() {
     behavior: "smooth"
     })
     setPagination((prevPage) => prevPage - 1);
+    if(searchQuery === ''){
+      fetchInitialImagesTwo()
+    } else {
+      handleSearch();
+    }
   };
  
 

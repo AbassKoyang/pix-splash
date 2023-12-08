@@ -10,6 +10,7 @@ import { useSession } from 'next-auth/react';
 import { useDispatch } from 'react-redux';
 import { setImages } from '@/redux/imageSplice';
 import CollectionView from '@/components/CollectionView';
+import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 
 
 
@@ -76,11 +77,11 @@ useEffect(() => {
     <main className={`min-h-screen overflow-x-hidden`}>
     <Navbar isSearchAllowed={true} otherStyles={`${navbar ? 'static' : 'static'}`} onSearch={handleSearch}/>
     { 
-      !collectionLoading && collection? (
+      !collectionLoading ? (
           <CollectionView collection={collection} />
         ) : (
-          <div className='w-full flex items-center justify-center py-5'>
-            <p>Loading collection images...</p>
+          <div className='w-full h-screen flex items-center justify-center'>
+            <p className='flex items-center gap-2'><span>Loading...</span> <AiOutlineLoading3Quarters className='animate-spin w-5 h-5'/></p>
           </div>
         )
     }

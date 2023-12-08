@@ -8,6 +8,7 @@ import Navbar from '@/components/Navbar';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
+import { setImages } from '@/redux/imageSplice';
 
 const UnslashUserProfile = () => {
     const [user, setUser] = useState(null);
@@ -49,10 +50,12 @@ const UnslashUserProfile = () => {
     }, [])
     
   return (
-    <section className='w-full items-center justify-center'>
+    <section className='w-full'>
         <Navbar isSearchAllowed={true} otherStyles={`${'static'}`} onSearch={handleSearch}/>
         {loading ? (
-        <p>Loading... <AiOutlineLoading3Quarters/></p>
+        <div className='w-full h-screen flex items-center justify-center'>
+        <p>Loading... <AiOutlineLoading3Quarters className='animate-spin w-5 h-5'/></p>
+        </div>
       ) : (
          user && (
           <UnsplashUserProfile user={user} />

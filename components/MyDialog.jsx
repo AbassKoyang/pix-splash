@@ -174,7 +174,11 @@ const [collections, setCollections] = useState([]);
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="fixed inset-0 bg-black/60" />
+          <div className="fixed inset-0 bg-black/60" onClick={(e) => {
+          if (e.target.classList.contains("overlay")) {
+            closeModal();
+          }
+        }}/>
         </Transition.Child>
 
         {/*

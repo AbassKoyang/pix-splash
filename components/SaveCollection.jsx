@@ -90,6 +90,7 @@ const handleEmptyTitle = (e) => {
             <h1 className='text-xl text-gray-800 font-medium mb-5'>Add this Shot to a collection</h1>
             <input type="text" placeholder='filter collections' className='w-full p-4 rounded-xl text-gray-200 outline-0 focus:shadow-red-200 focus:shadow-sm bg-white border-[1.5px] border-[#e7e7e9] mb-4 md:mb-2' />
             <div className={`w-full h-[220px] flex flex-col ${isFetchingCollections ? 'justify-center items-center' : ''} gap-2 overflow-y-scroll`}>
+            <AiOutlineLoading3Quarters className={`w-5 h-5 animate-spin absolute top-2 right-2 ${isAddingToCollection? 'block' : 'hidden'}`}/>
               {isFetchingCollections ? (
                 <div className='flex items-center gap-1'>
                   <p className='text-[15px] text-[#0d0c22] font-semibold'>Loading collections...</p> <AiOutlineLoading3Quarters className="w-5 h-5 animate-spin"/>
@@ -106,7 +107,6 @@ const handleEmptyTitle = (e) => {
                       <p className='text-[15px] text-[#0d0c22] font-semibold'>{title}</p>
                       <p className='text-[13px] text-[#6e6d7a] font-normal'>{content.length} shot</p>
                       </div>
-                      <AiOutlineLoading3Quarters className={`w-5 h-5 animate-spin absolute top-3 right-3 ${isAddingToCollection? 'block' : 'hidden'}`}/>
                       </button>
                       )
                     })

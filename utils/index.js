@@ -20,10 +20,10 @@ export const fetchImages = async (searchQuery, page) => {
     toast.error("Failed to fetch images. Please try check your internet connection.", {duration: '10000'});
   }
 };
-export const fetchInitialImages = async () => {
+export const fetchInitialImages = async (pagination) => {
   try {
     const response = await fetch(
-      `https://api.unsplash.com/photos?page=1&per_page=30&client_id=NYZmd55_VTMkgRhbnDUsQvBwV2tSjfoABwwu-Zp4uJ8`
+      `https://api.unsplash.com/photos?page=${pagination}&per_page=30&client_id=NYZmd55_VTMkgRhbnDUsQvBwV2tSjfoABwwu-Zp4uJ8`
     );
 
     if (!response.ok) {
@@ -36,7 +36,7 @@ export const fetchInitialImages = async () => {
   } catch (error) {
     console.error("Error in fetchImages:", error.message);
     // Handle errors gracefully, e.g., display a user-friendly error message
-    toast.error("Failed to fetch images. Please try check your internet connection.", {duration: '2000'});
+    toast.error("Failed to fetch images. Please try check your internet connection.");
   }
 };
 
