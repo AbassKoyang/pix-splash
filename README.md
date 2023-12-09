@@ -4,7 +4,7 @@ Built mainly with: NextJs, TailwindCSS, Headless UI, and MongoDB.
 
 Functionalities: Save images to collections, add images to favourites, download images, share collections.
 
-Live website: pix-splash.vercel.app
+Live website: https://pix-splash.vercel.app
 
 
 ![image](https://github.com/AbassKoyang/pix-splash/assets/125982523/b198ba3f-1e31-4b12-9c99-498e1753f81a)
